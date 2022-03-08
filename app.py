@@ -58,20 +58,20 @@ def user(username):
 @app.route('/sign_in', methods=['POST'])
 def sign_in():
     # 로그인
-    username_receive = request.form['username_give']
+    username_receive = request.form['username_give']                    # username_give로 받은 데이터를 username_receive에 저장
     password_receive = request.form['password_give']
 
-    pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
-    result = db.users.find_one({'username': username_receive, 'password': pw_hash})
+    pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()      #password_receive에 있는 비밀번호를 암호화
+    result = db.users.find_one({'username': username_receive, 'password': pw_hash}) #db에서 아이디와 암호화된 비밀번호가 있는지 찾기
 
-    if result is not None:
-        payload = {
+    if result is not None:                                                          #결과가 있는 경우
+        payload = {                                                                 #페이로드에 아이디와 만료시간을 저장
             'id': username_receive,
             'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
         }
-        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')                  #토큰에 페이로드/시크릿키를 담기
 
-        return jsonify({'result': 'success', 'token': token})
+        return jsonify({'result': 'success', 'token': token})                       #
     # 찾지 못하면
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
@@ -79,10 +79,12 @@ def sign_in():
 
 @app.route('/sign_up/save', methods=['POST'])
 def sign_up():
+    userRealName_receive = request.form['userRealName_give']
     username_receive = request.form['username_give']
     password_receive = request.form['password_give']
     password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
     doc = {
+        "userRealName": userRealName_receive,  # 회원이름
         "username": username_receive,  # 아이디
         "password": password_hash,  # 비밀번호
         "profile_name": username_receive,  # 프로필 이름 기본값은 아이디

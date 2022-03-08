@@ -23,7 +23,7 @@
 
     <style>
         body {
-            background-color: RGBA(232, 52, 78, 0.2);
+            background-color: RGBA(179,179,179,1);
             min-height: 100vh;
         }
 
@@ -46,19 +46,19 @@
         }
 
         .is-sparta {
-            color: #e8344e !important;
+            color: #f1d274 !important;
         }
 
         .button.is-sparta {
-            background-color: #e8344e;
+            background-color: #f1d274;
             border-color: transparent;
-            color: #fff !important;
+            color: black !important;
         }
 
         .button.is-sparta.is-outlined {
             background-color: transparent;
-            border-color: #e8344e;
-            color: #e8344e !important;
+            border-color: #f1d274;
+            color: black !important;
         }
 
         .help {
@@ -68,18 +68,18 @@
 
     <script>
         // {% if msg %}
-        //     alert("{{ msg }}")
-        // {% endif %}
+            //     alert("{{ msg }}")
+            // {% endif %}
         function sign_in() {
-            let username = $("#input-username").val()
+            let username = $("#input-username").val()                       //id 입력값 가져오기
             let password = $("#input-password").val()
 
-            if (username == "") {
-                $("#help-id-login").text("아이디를 입력해주세요.")
-                $("#input-username").focus()
+            if (username == "") {                                           //id 값이 비었을때
+                $("#help-id-login").text("아이디를 입력해주세요.")                //help-id-login div에 텍스트 메시지 출력
+                $("#input-username").focus()                                //id 입력창에 포커스 주기
                 return;
             } else {
-                $("#help-id-login").text("")
+                $("#help-id-login").text("")                                //id 값이 비어있지 않은 경우, help-id-div에 텍스트 삭제
             }
 
             if (password == "") {
@@ -93,13 +93,13 @@
                 type: "POST",
                 url: "/sign_in",
                 data: {
-                    username_give: username,
+                    username_give: username,                                //Post 방식으로 username, password 전달
                     password_give: password
                 },
                 success: function (response) {
-                    if (response['result'] == 'success') {
-                        $.cookie('mytoken', response['token'], {path: '/'});
-                        window.location.replace("/")
+                    if (response['result'] == 'success') {                      //성공시
+                        $.cookie('mytoken', response['token'], {path: '/'});    //쿠키에 토큰 저장, 경로를 '/'로 설정
+                        window.location.replace("/")                            //웹주소 이동
                     } else {
                         alert(response['msg'])
                     }
@@ -108,12 +108,17 @@
         }
 
         function sign_up() {
+            let userRealName = $("#input-user-real-name").val()
             let username = $("#input-username").val()
             let password = $("#input-password").val()
             let password2 = $("#input-password2").val()
             console.log(username, password, password2)
 
 
+            if (userRealName==='' | userRealName===null) {
+                alert("이름을 다시 확인해주세요.")
+                return;
+            }
             if ($("#help-id").hasClass("is-danger")) {
                 alert("아이디를 다시 확인해주세요.")
                 return;
@@ -148,6 +153,7 @@
                 type: "POST",
                 url: "/sign_up/save",
                 data: {
+                    userRealName_give:userRealName,
                     username_give: username,
                     password_give: password
                 },
@@ -160,16 +166,18 @@
         }
 
         function toggle_sign_up() {
+            $("#sign-up-name").toggleClass("is-hidden")
             $("#sign-up-box").toggleClass("is-hidden")
             $("#div-sign-in-or-up").toggleClass("is-hidden")
             $("#btn-check-dup").toggleClass("is-hidden")
+            $("#help-userName").toggleClass("is-hidden")
             $("#help-id").toggleClass("is-hidden")
             $("#help-password").toggleClass("is-hidden")
             $("#help-password2").toggleClass("is-hidden")
         }
 
         function is_nickname(asValue) {
-            var regExp = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{2,10}$/;  //맨앞에 소괄호: 필수 조건, 중간에 대괄호: 일반 조건, 마지막 괄호: 갯수 조건
+            var regExp = /[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]$/i;  //맨앞에 소괄호: 필수 조건, 중간에 대괄호: 일반 조건, 마지막 괄호: 갯수 조건
             return regExp.test(asValue);
         }
 
@@ -187,7 +195,7 @@
                 return;
             }
             if (!is_nickname(username)) {
-                $("#help-id").text("아이디의 형식을 확인해주세요. 영문과 숫자, 일부 특수문자(._-) 사용 가능. 2-10자 길이").removeClass("is-safe").addClass("is-danger")
+                $("#help-id").text("아이디를 이메일 형식으로 작성해주세요. 영문과 숫자, 일부 특수문자(._-) 사용 가능.").removeClass("is-safe").addClass("is-danger")
                 $("#input-username").focus()
                 return;
             }
@@ -227,6 +235,14 @@
             <article class="media">
                 <div class="media-content">
                     <div class="content">
+                        <div id="sign-up-name" class="field is-hidden">
+                            <div class="control has-icons-left">
+                                <input id="input-user-real-name" class="input" type="userName" placeholder="이름">
+                                <span class="icon is-small is-left"><i class="fa fa-lock"></i></span>
+                            </div>
+                            <p id="help-userName" class="help is-hidden">실명을 입력해주세요</p>
+                        </div>
+
                         <div class="field has-addons">
                             <div class="control has-icons-left" style="width:100%">
                                 <input id="input-username" class="input" type="text" placeholder="아이디">
@@ -235,9 +251,8 @@
                             <div id="btn-check-dup" class="control is-hidden">
                                 <button class="button is-sparta" onclick="check_dup()">중복확인</button>
                             </div>
-
                         </div>
-                        <p id="help-id" class="help is-hidden">아이디는 2-10자의 영문과 숫자와 일부 특수문자(._-)만 입력 가능합니다.</p>
+                        <p id="help-id" class="help is-hidden">아이디는 이메일 형식으로 입력해주세요.</p>
                         <p id="help-id-login" class="help is-danger"></p>
 
                         <div class="field">
