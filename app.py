@@ -14,28 +14,78 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'SPARTA'
 
-#크롤링 세팅
+# 크롤링 세팅
 
 # 타겟 URL을 읽어서 HTML를 받아오고,
-headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
-weather_data = requests.get('https://weather.com/ko-KR/weather/monthly/l/250893e65830bc39c66ad7582ad9a9e42c04ecac094d360be7eb4e12240b92ef/', headers=headers)
-movie_data = requests.get('https://movie.naver.com/movie/sdb/browsing/bmovie_genre.naver', headers=headers)
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
+movie_jenre_data = requests.get('https://movie.naver.com/movie/running/current.naver', headers=headers)
 
 # HTML을 BeautifulSoup이라는 라이브러리를 활용해 검색하기 용이한 상태로 만듦
 # soup이라는 변수에 "파싱 용이해진 html"이 담긴 상태가 됨
 # 이제 코딩을 통해 필요한 부분을 추출하면 된다.
-weather = BeautifulSoup(weather_data.text, 'html.parser')
-movie = BeautifulSoup(weather_data.text, 'html.parser')
+soup = BeautifulSoup(movie_jenre_data.text, 'html.parser')
 
-print(weather, movie)
+# content > div.article > div:nth-child(1) > div.lst_wrap > ul > li:nth-child(1) > dl > dt > a
+# content > div.article > div:nth-child(1) > div.lst_wrap > ul > li:nth-child(2) > dl > dt > a
 
-#몽고디비연결
+# content > div.article > div:nth-child(1) > div.lst_wrap > ul > li:nth-child(1) > div > a > img
+# content > div.article > div:nth-child(1) > div.lst_wrap > ul > li:nth-child(2) > div > a > img
+
+# content > div.article > div:nth-child(1) > div.lst_wrap > ul > li:nth-child(1) > dl > dd.star > dl.info_star > dd > div > a > span.num
+# content > div.article > div:nth-child(1) > div.lst_wrap > ul > li:nth-child(2) > dl > dd.star > dl.info_star > dd > div > a > span.num
+
+#content > div.article > div:nth-child(1) > div.lst_wrap > ul > li:nth-child(1) > dl > dd:nth-child(3) > dl > dd:nth-child(2) > span.link_txt > a:nth-child(1)
+#content > div.article > div:nth-child(1) > div.lst_wrap > ul > li:nth-child(1) > dl > dd:nth-child(3) > dl > dd:nth-child(2) > span.link_txt > a:nth-child(2)
+
+#content > div.article > div:nth-child(1) > div.lst_wrap > ul > li:nth-child(1) > dl > dd.info_t1 > div > a
+
+movieNames = soup.select('#content > div.article > div:nth-child(1) > div.lst_wrap > ul > li')
+movieImages = soup.select('#content > div.article > div:nth-child(1) > div.lst_wrap > ul > li')
+movieScores = soup.select('#content > div.article > div:nth-child(1) > div.lst_wrap > ul > li')
+movieJenres = soup.select('#content > div.article > div:nth-child(1) > div.lst_wrap > ul > li')
+
+for movieNm in movieNames:
+    a = movieNm.select_one('dl > dt > a')
+    if a is not None:
+        movieName = a.text
+        #print(movieName)
+
+for movieImg in movieImages:
+    a = movieImg.select_one('div > a > img')
+    if a is not None:
+        movieImage = a['src']
+        print(movieImage)
+
+# @app.route('/movie/<movieImg>')
+# def show_movie(movieImg):
+#     status_recieve = request.args.get("status_give","old")
+#     r = requests.get(f"https://movie.naver.com/movie/running/current.naver/{movieImg}", headers={"Authorization": "Token[토큰]"})
+#     if r.status_code !=200:
+#         return redirect(url_for("index", msg = "이미지를 불러오지 못했습니다."))
+#     result = r.json()
+#     return render_template("index.html", movieImg=movieImage)
+
+for movieScr in movieScores:
+    a = movieScr.select_one('dl > dd.star > dl.info_star > dd > div > a > span.num')
+    if a is not None:
+        movieScore = a.text
+        #print(movieScore)
+
+for movieJnr in movieJenres:
+    a = movieJnr.select_one('dl > dd:nth-child(3) > dl > dd:nth-child(2) > span.link_txt > a:nth-child(1)')
+    if a is not None:
+        movieJenre = a.text
+        #print(movieJenre)
+
+# 몽고디비연결
 from pymongo import MongoClient
 import certifi
 
-ca= certifi.where()
+ca = certifi.where()
 
-client = MongoClient('mongodb+srv://test:sparta@cluster0.1jgyj.mongodb.net/Cluster0?retryWrites=true&w=majority',tlsCAFile=ca)
+client = MongoClient('mongodb+srv://test:sparta@cluster0.1jgyj.mongodb.net/Cluster0?retryWrites=true&w=majority',
+                     tlsCAFile=ca)
 db = client.sparta
 
 
@@ -44,7 +94,7 @@ def home():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.users.find_one({"username":payload["id"]})
+        user_info = db.users.find_one({"username": payload["id"]})
         return render_template('index.html', user_info=user_info)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
@@ -75,20 +125,20 @@ def user(username):
 @app.route('/sign_in', methods=['POST'])
 def sign_in():
     # 로그인
-    username_receive = request.form['username_give']                    # username_give로 받은 데이터를 username_receive에 저장
+    username_receive = request.form['username_give']  # username_give로 받은 데이터를 username_receive에 저장
     password_receive = request.form['password_give']
 
-    pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()      #password_receive에 있는 비밀번호를 암호화
-    result = db.users.find_one({'username': username_receive, 'password': pw_hash}) #db에서 아이디와 암호화된 비밀번호가 있는지 찾기
+    pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()  # password_receive에 있는 비밀번호를 암호화
+    result = db.users.find_one({'username': username_receive, 'password': pw_hash})  # db에서 아이디와 암호화된 비밀번호가 있는지 찾기
 
-    if result is not None:                                                          #결과가 있는 경우
-        payload = {                                                                 #페이로드에 아이디와 만료시간을 저장
+    if result is not None:  # 결과가 있는 경우
+        payload = {  # 페이로드에 아이디와 만료시간을 저장
             'id': username_receive,
             'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
         }
-        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')                  #토큰에 페이로드/시크릿키를 담기
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')  # 토큰에 페이로드/시크릿키를 담기
 
-        return jsonify({'result': 'success', 'token': token})                       #토큰 전달
+        return jsonify({'result': 'success', 'token': token})  # 토큰 전달
     # 찾지 못하면
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})

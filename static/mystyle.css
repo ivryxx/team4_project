@@ -40,3 +40,21 @@ input::-webkit-calendar-picker-indicator {
     width: 100%;
     height: 100%;
 }
+
+.is-white {
+    justify-content: center;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
+.flex-item {
+    width: 20%;
+    height: 150px;
+    margin: 10px;
+    background-color: darksalmon;
+}
+
