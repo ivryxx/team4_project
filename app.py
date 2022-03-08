@@ -12,8 +12,14 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'SPARTA'
 
-client = MongoClient('mongodb://3.34.44.93', 27017, username="sparta", password="woowa")
-db = client.dbsparta_plus_week4
+#몽고디비연결
+from pymongo import MongoClient
+import certifi
+
+ca= certifi.where()
+
+client = MongoClient('mongodb+srv://test:sparta@cluster0.1jgyj.mongodb.net/Cluster0?retryWrites=true&w=majority',tlsCAFile=ca)
+db = client.sparta
 
 
 @app.route('/')
