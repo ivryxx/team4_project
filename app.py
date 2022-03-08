@@ -71,7 +71,7 @@ def sign_in():
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')                  #토큰에 페이로드/시크릿키를 담기
 
-        return jsonify({'result': 'success', 'token': token})                       #
+        return jsonify({'result': 'success', 'token': token})                       #토큰 전달
     # 찾지 못하면
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
