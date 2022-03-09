@@ -5,6 +5,8 @@ import hashlib
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
+import requests
+from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -44,7 +46,10 @@ for movie in movies:
         movieImage = movie.select_one('div > a > img')['src']
         movieScore = movie.select_one('dl > dd.star > dl.info_star > dd > div > a > span.num').text
         movieJenre = movie.select_one('dl > dd:nth-child(3) > dl > dd:nth-child(2) > span.link_txt > a:nth-child(1)').text
-        print(movieName, movieImage, movieScore, movieJenre)
+        # print(movieName, movieImage, movieScore, movieJenre)
+
+
+
         doc = {
             'movieNm': movieName,
             'movieImg': movieImage,
@@ -164,9 +169,6 @@ def check_dup():
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
-@app.route("/weather", methods=["GET"])
-def show_weather():
-    weather_list = list(db.weather1.find({}, {'_id': False}))
 
 
 @app.route('/posting', methods=['POST'])
