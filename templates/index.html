@@ -33,9 +33,18 @@
                     success : function(response) {
                         let rows= response['weather']
                         console.log(rows)
-
                            let weather = rows[0]['weather']
-                            let temp_html = `<li>${weather}</li>`
+                           let temperature = rows[0]['temperature']
+                           let humidity = rows[0]['humidity']
+                           let wind = rows[0]['wind']
+                           let location = rows[0]['location']
+                            let temp_html = `<li>
+                            <p>오늘의 날씨는? ${weather}</p>
+                            <p>기온 : ${temperature}</p>
+                            <p>습도 : ${humidity}</p>
+                            <p>바람 : ${wind}</p>
+                            <p>위치 : ${location}</p>
+                            </li>`
                             $('#weather').append(temp_html)
 
                         }
@@ -64,6 +73,7 @@
 <div class="weather_info">
     <h1>날씨 정보입니다</h1>
     <ul id="weather"></ul>
+
 
 </div>
 
