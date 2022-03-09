@@ -34,12 +34,13 @@
                         let rows = response['weather']
                         console.log(rows)
 
-                        let location = rows[0]['location']
-                        let weather = rows[0]['weather']
-                        // let temp_html = `<li>${weather}</li>`
-                        let temperature = rows[0]['temperature']
-                           let humidity = rows[0]['humidity']
-                           let wind = rows[0]['wind']
+                        for (let i = rows.length-1; i < rows.length; i++) {
+                            let location = rows[i]['location']
+                            let weather = rows[i]['weather']
+                            // let temp_html = `<li>${weather}</li>`
+                            let temperature = rows[i]['temperature']
+                            let humidity = rows[i]['humidity']
+                            let wind = rows[i]['wind']
 
                             let temp_html = `<li>
                             <p>위치 : ${location}</p>
@@ -49,8 +50,10 @@
                             <p>바람 : ${wind}</p>
                             </li>`
                             $('#weather').append(temp_html)
-                    }
+                        }
+                    },
                 })
+
 
             }
 
@@ -78,8 +81,57 @@
 <div class="weather_info">
     <h3><span>Weather</span></h3>
     <ul id="weather"></ul>
-
 </div>
 
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
 </body>
 </html>
