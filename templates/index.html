@@ -18,38 +18,63 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="{{ url_for('static', filename='mystyle.css') }}" rel="stylesheet">
 
-   <script>
+    <script>
+        $(document).ready(function () {
+            listing();
+            show_weather();
+        })
 
-            $(document).ready(function () {
-                    show_weather();
-                    });
-            function show_weather() {
+        function listing() {
+            $.ajax({
+                type: 'GET',
+                url: '/movieData',
+                data: {},
+                success: function (response) {
+                    let rows = response['movies']
+                    console.log(rows)
+                    for (let i = 0; i < rows.length; i++) {
+                        let movieName = rows[i]['movieNm']
+                        let movieImage = rows[i]['movieImg']
+                        let movieScore = rows[i]['movieScr']
+                        let movieJenre = rows[i]['movieJnr']
 
-                $.ajax({
-                    type: "GET",
-                    url: "/weather",
-                    data: {},
-                    success: function (response) {
-                        let rows = response['weather']
-                        console.log(rows)
+                        console.log(movieName, movieScore, movieJenre, movieImage)
+                        let temp_html = `<li><img src="${movieImage}" style="width:170px; height:250px;"
+                                             class="images" alt="..."></li>`
+                        $('#movie').append(temp_html)
+                    }
+                }
+            });
+        }
 
-                        for (let i = rows.length-1; i < rows.length; i++) {
-                            let location = rows[i]['location']
-                            let weather = rows[i]['weather']
-                            // let temp_html = `<li>${weather}</li>`
-                            let temperature = rows[i]['temperature']
-                            let humidity = rows[i]['humidity']
-                            let wind = rows[i]['wind']
+        function show_weather() {
 
-                            let temp_html = `<li>
+            $.ajax({
+                type: "GET",
+                url: "/weather",
+                data: {},
+                success: function (response) {
+                    let rows = response['weather']
+                    console.log(rows)
+
+                    for (let i = rows.length - 1; i < rows.length; i++) {
+                        let location = rows[i]['location']
+                        let weather = rows[i]['weather']
+                        // let temp_html = `<li>${weather}</li>`
+                        let temperature = rows[i]['temperature']
+                        let humidity = rows[i]['humidity']
+                        let wind = rows[i]['wind']
+
+                        let temp_html = `<li>
                             <p>위치 : ${location}</p>
                             <p>현재 날씨 : ${weather}</p>
                             <p>기온 : ${temperature}</p>
                             <p>습도 : ${humidity}</p>
                             <p>바람 : ${wind}</p>
                             </li>`
-                    $('#weather').append(temp_html)
+                        $('#weather').append(temp_html)
 
+                    }
                 }
             })
         }
@@ -79,7 +104,6 @@
 
 
 </div>
-
 
 
 <section class="section">
@@ -131,12 +155,13 @@
                 onclick='$("#modal-post").removeClass("is-active")'></button>
     </div>
 </section>
-<div class="slide_wrapper">
+    <div class="slide_wrapper">
     <div class="slides" id="movie">
     </div>
 </div>
+</div>
 
-    </div>
+</div>
 </section>
 <footer class="footer mt-3">
     <div class="content has-text-centered">
