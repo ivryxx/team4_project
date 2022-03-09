@@ -3,7 +3,10 @@
 <head>
 
     <!-- Webpage Title -->
-    <title>Home | SWEETER</title>
+    <title>Home | 날씨야 뭐볼까?</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -15,50 +18,55 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="{{ url_for('static', filename='mystyle.css') }}" rel="stylesheet">
 
-    <!-- JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-
-
-    <script>
+   <script>
 
             $(document).ready(function () {
-                show_weather();
-                });
+                    show_weather();
+                    });
             function show_weather() {
+
                 $.ajax({
                     type: "GET",
-                    url :"/weather",
+                    url: "/weather",
                     data: {},
-                    success : function(response) {
-                        let rows= response['weather']
+                    success: function (response) {
+                        let rows = response['weather']
                         console.log(rows)
-                           let weather = rows[0]['weather']
-                           let temperature = rows[0]['temperature']
-                           let humidity = rows[0]['humidity']
-                           let wind = rows[0]['wind']
-                           let location = rows[0]['location']
+
+                        for (let i = rows.length-1; i < rows.length; i++) {
+                            let location = rows[i]['location']
+                            let weather = rows[i]['weather']
+                            // let temp_html = `<li>${weather}</li>`
+                            let temperature = rows[i]['temperature']
+                            let humidity = rows[i]['humidity']
+                            let wind = rows[i]['wind']
+
                             let temp_html = `<li>
-                            <p>오늘의 날씨는? ${weather}</p>
+                            <p>위치 : ${location}</p>
+                            <p>현재 날씨 : ${weather}</p>
                             <p>기온 : ${temperature}</p>
                             <p>습도 : ${humidity}</p>
                             <p>바람 : ${wind}</p>
-                            <p>위치 : ${location}</p>
                             </li>`
                             $('#weather').append(temp_html)
-
                         }
-            })
-        }
+                    },
+                })
+
+
+            }
+
+
+
+
 
 
     </script>
 
 </head>
 <body>
-
-<nav class="navbar is-light" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
+<nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand" style="justify-content: center;">
         <a class="navbar-item" href="/">
             <p class="title">날씨야 뭐볼래?! &nbsp;| </p>
         </a>
@@ -155,6 +163,56 @@
                             </a>
                         </div>
 
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
+<div class="snowflake"></div>
                     </nav>
                 </div>
             </article>
