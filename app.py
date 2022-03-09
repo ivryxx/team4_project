@@ -5,6 +5,8 @@ import hashlib
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
+import requests
+from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -17,10 +19,13 @@ SECRET_KEY = 'SPARTA'
 from pymongo import MongoClient
 import certifi
 
-ca= certifi.where()
+ca = certifi.where()
 
-client = MongoClient('mongodb+srv://test:sparta@cluster0.1jgyj.mongodb.net/Cluster0?retryWrites=true&w=majority',tlsCAFile=ca)
+client = MongoClient('mongodb+srv://test:sparta@cluster0.1jgyj.mongodb.net/Cluster0?retryWrites=true&w=majority',
+                     tlsCAFile=ca)
 db = client.sparta
+
+
 
 # 타겟 URL을 읽어서 HTML를 받아오고,
 # HTML을 BeautifulSoup이라는 라이브러리를 활용해 검색하기 용이한 상태로 만듦
@@ -32,28 +37,33 @@ headers = {
 movie_data = requests.get('https://movie.naver.com/movie/running/current.naver', headers=headers)
 moviedata = BeautifulSoup(movie_data.text, 'html.parser')
 
+
+
 # 공통 코드 추출
 movies = moviedata.select('#content > div.article > div:nth-child(1) > div.lst_wrap > ul > li')
 
+
+
 # 반복문 돌면서 아래 코드 실행
+db.movieData.drop()
 for movie in movies:
     title = movie.select_one('dl > dt > a').text
     if title is not None:
-
         movieName = title
         movieImage = movie.select_one('div > a > img')['src']
         movieScore = movie.select_one('dl > dd.star > dl.info_star > dd > div > a > span.num').text
         movieJenre = movie.select_one('dl > dd:nth-child(3) > dl > dd:nth-child(2) > span.link_txt > a:nth-child(1)').text
-        print(movieName, movieImage, movieScore, movieJenre)
+
         doc = {
-            'movieNm': movieName,
             'movieImg': movieImage,
+            'movieNm': movieName,
             'movieScr': movieScore,
             'movieJnr': movieJenre
         }
         db.movieData.insert_one(doc)
 
-data = requests.get('https://weather.com/ko-KR/weather/today',headers=headers)
+
+data = requests.get('https://weather.com/ko-KR/weather/today', headers=headers)
 
 soup = BeautifulSoup(data.text, 'html.parser')
 
@@ -63,7 +73,7 @@ image = soup.select_one('#WxuCurrentConditions-main-b3094163-ef75-4558-8d9a-e35e
 humidity = soup.select_one('#todayDetails > section > div.TodayDetailsCard--detailsContainer--16Hg0 > div:nth-child(3) > div.WeatherDetailsListItem--wxData--2s6HT > span')
 wind = soup.select_one('#todayDetails > section > div.TodayDetailsCard--detailsContainer--16Hg0 > div:nth-child(2) > div.WeatherDetailsListItem--wxData--2s6HT > span')
 location = soup.select_one('#WxuCurrentConditions-main-b3094163-ef75-4558-8d9a-e35e6b9b1034 > div > section > div > div.CurrentConditions--header--27uOE > h1')
-print('습도:', humidity.text ,image, '오늘의 날씨는?', weather.text , '기온:', temperature.text , '바람:',wind.text , location.text)
+print('습도:', humidity.text, image, '오늘의 날씨는?', weather.text, '기온:', temperature.text, '바람:', wind.text, location.text)
 
 doc = {
     'weather': weather.text,
@@ -73,7 +83,6 @@ doc = {
     'location': location.text
 }
 db.weather.insert_one(doc)
-
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -164,10 +173,6 @@ def check_dup():
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
-@app.route("/weather", methods=["GET"])
-def show_weather():
-    weather_list = list(db.weather1.find({}, {'_id': False}))
-
 
 @app.route('/posting', methods=['POST'])
 def posting():
@@ -190,15 +195,20 @@ def get_posts():
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
+
 @app.route("/weather", methods=['GET'])
 def weather():
     weather_list = list(db.weather.find({}, {'_id': False}))
     return jsonify({'weather': weather_list})
 
+
 @app.route("/movieData", methods=["GET"])
 def movie_listing():
     movie_list = list(db.movieData.find({}, {'_id': False}))
     return jsonify({'movies': movie_list})
+
+
+
 
 
 @app.route('/update_like', methods=['POST'])
