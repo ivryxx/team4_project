@@ -6,12 +6,6 @@ from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 
-app = Flask(__name__)
-app.config["TEMPLATES_AUTO_RELOAD"] = True
-app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
-
-SECRET_KEY = 'SPARTA'
-
 #몽고디비연결
 from pymongo import MongoClient
 import certifi
@@ -20,6 +14,39 @@ ca= certifi.where()
 
 client = MongoClient('mongodb+srv://test:sparta@cluster0.1jgyj.mongodb.net/Cluster0?retryWrites=true&w=majority',tlsCAFile=ca)
 db = client.sparta
+
+import requests
+from bs4 import BeautifulSoup
+
+headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
+data = requests.get('https://weather.com/ko-KR/weather/today',headers=headers)
+
+soup = BeautifulSoup(data.text, 'html.parser')
+
+weather = soup.select_one('#WxuCurrentConditions-main-b3094163-ef75-4558-8d9a-e35e6b9b1034 > div > section > div > div.CurrentConditions--body--8sQIV > div.CurrentConditions--columns--3KgfN > div.CurrentConditions--primary--2SVPh > div.CurrentConditions--phraseValue--2Z18W')
+temperature= soup.select_one('#WxuCurrentConditions-main-b3094163-ef75-4558-8d9a-e35e6b9b1034 > div > section > div > div.CurrentConditions--body--8sQIV > div.CurrentConditions--columns--3KgfN > div.CurrentConditions--primary--2SVPh > span')
+image = soup.select_one('#WxuCurrentConditions-main-b3094163-ef75-4558-8d9a-e35e6b9b1034 > div > section > div > div.CurrentConditions--body--8sQIV > div.CurrentConditions--columns--3KgfN > div.CurrentConditions--secondary--2J2Cx > svg > use:nth-child(2)')
+humidity =soup.select_one('#todayDetails > section > div.TodayDetailsCard--detailsContainer--16Hg0 > div:nth-child(3) > div.WeatherDetailsListItem--wxData--2s6HT > span')
+wind = soup.select_one('#todayDetails > section > div.TodayDetailsCard--detailsContainer--16Hg0 > div:nth-child(2) > div.WeatherDetailsListItem--wxData--2s6HT > span')
+location = soup.select_one('#WxuCurrentConditions-main-b3094163-ef75-4558-8d9a-e35e6b9b1034 > div > section > div > div.CurrentConditions--header--27uOE > h1')
+print( '습도:', humidity.text ,image, '오늘의 날씨는?', weather.text , '기온:', temperature.text , '바람:',wind.text , location.text)
+
+doc = {
+    'weather' : weather.text,
+    'temperature' : temperature.text,
+    'humidity': humidity.text,
+    'wind': wind.text,
+    'location': location.text
+}
+db.weather.insert_one(doc)
+
+app = Flask(__name__)
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
+
+SECRET_KEY = 'SPARTA'
+
+
 
 
 @app.route('/')
@@ -132,6 +159,11 @@ def get_posts():
         return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다."})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
+
+@app.route("/weather", methods=['GET'])
+def weather():
+    weather_list = list(db.weather.find({}, {'_id': False}))
+    return jsonify({'weather': weather_list})
 
 
 @app.route('/update_like', methods=['POST'])
