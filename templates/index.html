@@ -43,29 +43,25 @@
                             let wind = rows[i]['wind']
 
                             let temp_html = `<li>
-                            <p>위치 : ${location}</p>
-                            <p>현재 날씨 : ${weather}</p>
-                            <p>기온 : ${temperature}</p>
-                            <p>습도 : ${humidity}</p>
-                            <p>바람 : ${wind}</p>
+<div class="my-weatherbox">
+                        <div class="box">
+                            <p align="center"><span> ☀ </span>
+                            위치 : ${location}<span> ☀ </span>
+                            현재 날씨 : ${weather}<span> ☀ </span>
+                            기온 : ${temperature}<span> ☀ </span>
+                            습도 : ${humidity}<span> ☀ </span>
+                            바람 : ${wind}</p>
+                        </div>
+                        </div>
                             </li>`
                             $('#weather').append(temp_html)
                         }
                     },
                 })
-
-
             }
 
 
-
-
-
-
     </script>
-
-
-
 
 </head>
 <body>
@@ -74,64 +70,66 @@
         <a class="navbar-item" href="/">
             {# <img src="{{ url_for('static', filename='logo.png') }}">#}
             <strong class="is-sparta"
-                    style="font-family: 'Stylish', sans-serif;font-size: larger;">☀️☁️날씨야 뭐볼까🌧☃️</strong>
+                    style="font-family: 'Stylish', sans-serif;font-size: larger;">☀️☁️날씨야 뭐볼까?🌧☃️</strong>
         </a>
     </div>
 </nav>
 <div class="weather_info">
-    <h3><span>Weather</span></h3>
+<!--    <h3>-->
+<!--        <span align="center", class="is-weather"-->
+<!--               style="font-family: 'Stylish', sans-serif;font-size: larger;" >Weather</span></h3>-->
     <ul id="weather"></ul>
 </div>
 
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
-<div class="snowflake"></div>
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
 </body>
 </html>
