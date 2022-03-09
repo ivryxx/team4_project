@@ -3,7 +3,10 @@
 <head>
 
     <!-- Webpage Title -->
-    <title>Home | SWEETER</title>
+    <title>Home | 날씨야 뭐볼까?</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -15,60 +18,35 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="{{ url_for('static', filename='mystyle.css') }}" rel="stylesheet">
 
-    <!-- JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+   <script>
 
+            $(document).ready(function () {
+                    show_weather();
+                    });
+            function show_weather() {
 
-    <script>
-        $(document).ready(function () {
-            listing();
-            show_weather();
-        })
+                $.ajax({
+                    type: "GET",
+                    url: "/weather",
+                    data: {},
+                    success: function (response) {
+                        let rows = response['weather']
+                        console.log(rows)
 
-        function listing() {
-            $.ajax({
-                type: 'GET',
-                url: '/movieData',
-                data: {},
-                success: function (response) {
-                    let rows = response['movies']
-                    console.log(rows)
-                    for (let i = 0; i < rows.length; i++) {
-                        let movieName = rows[i]['movieNm']
-                        let movieImage = rows[i]['movieImg']
-                        let movieScore = rows[i]['movieScr']
-                        let movieJenre = rows[i]['movieJnr']
+                        for (let i = rows.length-1; i < rows.length; i++) {
+                            let location = rows[i]['location']
+                            let weather = rows[i]['weather']
+                            // let temp_html = `<li>${weather}</li>`
+                            let temperature = rows[i]['temperature']
+                            let humidity = rows[i]['humidity']
+                            let wind = rows[i]['wind']
 
-                        console.log(movieName, movieScore, movieJenre, movieImage)
-                        let temp_html = `<li><img src="${movieImage}" style="width:170px; height:250px;"
-                                             class="images" alt="..."></li>`
-                        $('#movie').append(temp_html)
-                    }
-                }
-            });
-        }
-
-
-        function show_weather() {
-            $.ajax({
-                type: "GET",
-                url: "/weather",
-                data: {},
-                success: function (response) {
-                    let rows = response['weather']
-                    console.log(rows)
-                    let weather = rows[0]['weather']
-                    let temperature = rows[0]['temperature']
-                    let humidity = rows[0]['humidity']
-                    let wind = rows[0]['wind']
-                    let location = rows[0]['location']
-                    let temp_html = `<li>
-                            <p>오늘의 날씨는? ${weather}</p>
+                            let temp_html = `<li>
+                            <p>위치 : ${location}</p>
+                            <p>현재 날씨 : ${weather}</p>
                             <p>기온 : ${temperature}</p>
                             <p>습도 : ${humidity}</p>
                             <p>바람 : ${wind}</p>
-                            <p>위치 : ${location}</p>
                             </li>`
                     $('#weather').append(temp_html)
 
@@ -101,6 +79,7 @@
 
 
 </div>
+
 
 
 <section class="section">
@@ -157,6 +136,8 @@
     </div>
 </div>
 
+    </div>
+</section>
 <footer class="footer mt-3">
     <div class="content has-text-centered">
         <p>

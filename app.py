@@ -2,12 +2,6 @@ from pymongo import MongoClient
 import jwt
 import datetime
 import hashlib
-from datetime import datetime, timedelta
-
-import jwt
-import requests
-
-from bs4 import BeautifulSoup
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
@@ -60,6 +54,7 @@ for movie in movies:
         db.movieData.insert_one(doc)
 
 data = requests.get('https://weather.com/ko-KR/weather/today',headers=headers)
+
 soup = BeautifulSoup(data.text, 'html.parser')
 
 weather = soup.select_one('#WxuCurrentConditions-main-b3094163-ef75-4558-8d9a-e35e6b9b1034 > div > section > div > div.CurrentConditions--body--8sQIV > div.CurrentConditions--columns--3KgfN > div.CurrentConditions--primary--2SVPh > div.CurrentConditions--phraseValue--2Z18W')
@@ -78,6 +73,16 @@ doc = {
     'location': location.text
 }
 db.weather.insert_one(doc)
+
+
+app = Flask(__name__)
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
+
+SECRET_KEY = 'SPARTA'
+
+
+
 
 @app.route('/')
 def home():
@@ -159,16 +164,9 @@ def check_dup():
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
-
-@app.route('/update_profile', methods=['POST'])
-def save_img():
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        # 프로필 업데이트
-        return jsonify({"result": "success", 'msg': '프로필을 업데이트했습니다.'})
-    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("home"))
+@app.route("/weather", methods=["GET"])
+def show_weather():
+    weather_list = list(db.weather1.find({}, {'_id': False}))
 
 
 @app.route('/posting', methods=['POST'])
