@@ -15,7 +15,7 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@500&display=swap" rel="stylesheet">
 
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -23,7 +23,7 @@
 
     <style>
         body {
-            background-color: lightsteelblue;
+            background-color: RGBA(179,179,179,1);
             min-height: 100vh;
         }
 
@@ -34,9 +34,9 @@
         }
 
         .title {
-            font-weight: 560;
-            font-size: 6rem;
-            font-family: 'Do Hyeon', sans-serif;
+            font-weight: 800;
+            font-size: 5rem;
+            font-family: 'Pacifico', cursive;
 
         }
 
@@ -46,23 +46,30 @@
         }
 
         .is-sparta {
-            color: #608ca1 !important;
+            color: #f1d274 !important;
         }
 
         .button.is-sparta {
-            background-color: #343c6e;
+            background-color: #f1d274;
             border-color: transparent;
-            color: #fff !important;
+            color: black !important;
         }
 
         .button.is-sparta.is-outlined {
             background-color: transparent;
-            border-color: #343c6e;
-            color: #343c6e !important;
+            border-color: #f1d274;
+            color: black !important;
         }
 
         .help {
             color: gray;
+        }
+        .is-white{
+            background-image: url("https://blog.kakaocdn.net/dn/dGxSVo/btrvqjiIU9Y/mlf7oVR0nuxgPWdL9uQe1k/img.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 400px;
         }
     </style>
 
@@ -71,15 +78,15 @@
             //     alert("{{ msg }}")
             // {% endif %}
         function sign_in() {
-            let username = $("#input-username").val()
+            let username = $("#input-username").val()                       //id 입력값 가져오기
             let password = $("#input-password").val()
 
-            if (username == "") {
-                $("#help-id-login").text("아이디를 입력해주세요.")
-                $("#input-username").focus()
+            if (username == "") {                                           //id 값이 비었을때
+                $("#help-id-login").text("아이디를 입력해주세요.")                //help-id-login div에 텍스트 메시지 출력
+                $("#input-username").focus()                                //id 입력창에 포커스 주기
                 return;
             } else {
-                $("#help-id-login").text("")
+                $("#help-id-login").text("")                                //id 값이 비어있지 않은 경우, help-id-div에 텍스트 삭제
             }
 
             if (password == "") {
@@ -93,13 +100,13 @@
                 type: "POST",
                 url: "/sign_in",
                 data: {
-                    username_give: username,
+                    username_give: username,                                //Post 방식으로 username, password 전달
                     password_give: password
                 },
                 success: function (response) {
-                    if (response['result'] == 'success') {
-                        $.cookie('mytoken', response['token'], {path: '/'});
-                        window.location.replace("/")
+                    if (response['result'] == 'success') {                      //성공시
+                        $.cookie('mytoken', response['token'], {path: '/'});    //쿠키에 토큰 저장, 경로를 '/'로 설정
+                        window.location.replace("/")                            //웹주소 이동
                     } else {
                         alert(response['msg'])
                     }
@@ -108,58 +115,56 @@
         }
 
         function sign_up() {
-            let realname = $("#input-user-real-name").val()
+            let userRealName = $("#input-user-real-name").val()
             let username = $("#input-username").val()
             let password = $("#input-password").val()
             let password2 = $("#input-password2").val()
             console.log(username, password, password2)
 
 
-            if (realname === '' | realname === null) {
+            if (userRealName==='' | userRealName===null) {                      //유저이름 없는 경우 alert 띄우기
                 alert("이름을 다시 확인해주세요.")
                 return;
             }
-
-
-            if ($("#help-id").hasClass("is-danger")) {
+            if ($("#help-id").hasClass("is-danger")) {                          //help-id가 'is-danger'클래스 가지고 있는 경우
                 alert("아이디를 다시 확인해주세요.")
                 return;
-            } else if (!$("#help-id").hasClass("is-success")) {
+            } else if (!$("#help-id").hasClass("is-success")) {                 //help-id가 'is-success'클래스가 아닌 경우
                 alert("아이디 중복확인을 해주세요.")
                 return;
             }
 
-            if (password == "") {
-                $("#help-password").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
-                $("#input-password").focus()
+            if (password == "") {                                                                                   //비밀번호가 없는 경우
+                $("#help-password").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")         //help-password의 텍스트를 추가하고, 'is-safe'클래스를 없애고, 'is-danger'클래스 추가
+                $("#input-password").focus()                                                                        //input-password 입력칸에 포커스 주기
                 return;
-            } else if (!is_password(password)) {
+            } else if (!is_password(password)) {                                                                    //입력된 값이 비밀번호 정규식에 해당하지 않는 경우
                 $("#help-password").text("비밀번호의 형식을 확인해주세요. 영문과 숫자 필수 포함, 특수문자(!@#$%^&*) 사용가능 8-20자").removeClass("is-safe").addClass("is-danger")
                 $("#input-password").focus()
                 return
-            } else {
+            } else {                                                                                                //이외의 경우(비밀번호가 정규식을 통과한 경우)
                 $("#help-password").text("사용할 수 있는 비밀번호입니다.").removeClass("is-danger").addClass("is-success")
             }
-            if (password2 == "") {
+            if (password2 == "") {                                                                                  //비밀번호 2가 없는 경우
                 $("#help-password2").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
                 $("#input-password2").focus()
                 return;
-            } else if (password2 != password) {
+            } else if (password2 != password) {                                                                     //비밀번호 2가 비밀번호와 다른 경우
                 $("#help-password2").text("비밀번호가 일치하지 않습니다.").removeClass("is-safe").addClass("is-danger")
                 $("#input-password2").focus()
                 return;
-            } else {
+            } else {                                                                                                //일치한 경우
                 $("#help-password2").text("비밀번호가 일치합니다.").removeClass("is-danger").addClass("is-success")
             }
             $.ajax({
                 type: "POST",
                 url: "/sign_up/save",
                 data: {
-                    realname_give: realname,
+                    userRealName_give:userRealName,
                     username_give: username,
                     password_give: password
                 },
-                success: function (response) {
+                success: function (response) {                                                                      //성공시 알럿창 띄우고 로그인페이지로 이석
                     alert("회원가입을 축하드립니다!")
                     window.location.replace("/login")
                 }
@@ -172,18 +177,14 @@
             $("#sign-up-box").toggleClass("is-hidden")
             $("#div-sign-in-or-up").toggleClass("is-hidden")
             $("#btn-check-dup").toggleClass("is-hidden")
-            $("#help-realname").toggleClass("is-hidden")
+            $("#help-userName").toggleClass("is-hidden")
             $("#help-id").toggleClass("is-hidden")
             $("#help-password").toggleClass("is-hidden")
             $("#help-password2").toggleClass("is-hidden")
         }
 
-
         function is_nickname(asValue) {
-            var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; //맨앞에 소괄호: 필수 조건, 중간에 대괄호: 일반 조건, 마지막 괄호: 갯수 조건
-            //i 정규표현식에 사용된 패턴이 대소문자를 구분하지 않도록 i를 사용함
-
-
+            var regExp = /[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]$/i;  //맨앞에 소괄호: 필수 조건, 중간에 대괄호: 일반 조건, 마지막 괄호: 갯수 조건
             return regExp.test(asValue);
         }
 
@@ -201,7 +202,7 @@
                 return;
             }
             if (!is_nickname(username)) {
-                $("#help-id").text("아이디의 형식이 이메일인지 확인해주세요. 영문 대소문자, 숫자, 일부 특수문자(._-) 사용 가능").removeClass("is-safe").addClass("is-danger")
+                $("#help-id").text("아이디를 이메일 형식으로 작성해주세요. 영문과 숫자, 일부 특수문자(._-) 사용 가능.").removeClass("is-safe").addClass("is-danger")
                 $("#input-username").focus()
                 return;
             }
@@ -231,11 +232,10 @@
 <body>
 <section class="hero is-white">
     <div class="hero-body has-text-centered" style="padding-bottom:1rem;margin:auto;">
-        <h1 class="title is-sparta">날씨야 뭐볼까?</h1>
-        <h3 class="subtitle is-sparta">날씨 맞춤 영화 추천 서비스</h3>
+{#        <h1 class="title is-sparta">날씨야 뭐볼까?</h1>#}
+{#        <h3 class="subtitle is-sparta">날씨 맞춤 영화 추천 서비스</h3>#}
     </div>
 </section>
-
 <section class="section">
     <div class="container">
         <div class="box" style="max-width: 480px;margin:auto">
@@ -260,7 +260,7 @@
                             </div>
 
                         </div>
-                        <p id="help-id" class="help is-hidden">아이디는 이메일 형식으로 입력해주세요.</p>
+                        <p id="help-id" class="help is-hidden">아이디는 2-10자의 영문과 숫자와 일부 특수문자(._-)만 입력 가능합니다.</p>
                         <p id="help-id-login" class="help is-danger"></p>
 
                         <div class="field">
@@ -322,6 +322,5 @@
 
     </div>
 </section>
-
 </body>
 </html>
