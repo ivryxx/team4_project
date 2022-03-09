@@ -8,6 +8,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="js/lightbox.min.js"></script>
 
 
     <!-- Required meta tags -->
@@ -24,6 +25,7 @@
     <link href="{{ url_for('static', filename='mystyle.css') }}" rel="stylesheet">
 
     <script>
+
 
         $(document).ready(function () {
             listing();
@@ -76,7 +78,7 @@
 
                         let temp_html = `<li>
                 <div class="my-weatherbox">
-                        <div class="box">
+                        <div style="color:white; background-color: #340303" class="box">
                             <p align="center"><span> ☀ </span>
                             위치 : ${location}<span> ☀ </span>
                             현재 날씨 : ${weather}<span> ☀ </span>
@@ -104,11 +106,6 @@
         <a class="navbar-item" href="/">
             <p class="title">☔⛄날씨야 뭐볼래?!🌞🎬</p>
         </a>
-        <!-- 로그인하면 보이는 회원 이름 -->
-<!--        <a class="navbar-item">-->
-<!--            <p class="title3 user-name" id="user-name"><strong class="has-text-link">{{ user_id }}</strong> 님, 안녕하세요!-->
-<!--            </p>-->
-<!--        </a>-->
     </div>
 </nav>
 <div class="weather_info">
@@ -129,6 +126,14 @@
                 <p class="control">
                     <input id="input-post" class="input is-rounded" placeholder="무슨 생각을 하고 계신가요?"
                            onclick='$("#modal-post").addClass("is-active")'></p>
+<!--                <select class="option" id="option">-->
+<!--                    <option> 오늘의 날씨는?</option>-->
+<!--                    <option class="Sun" id="Sun" onclick="Sun()"> 🌞맑음</option>-->
+<!--                    <option class="Cloudy" id="Cloudy" onclick="Cloudy()"> 🌫흐림</option>-->
+<!--                    <option class="Rain" id="Rain" onclick="Rain()"> 💧비</option>-->
+<!--                    <option class="Snow" id="Snow" onclick="Snow()"> ⛄눈</option>-->
+<!--                    <option class="Etc" id="Etc" onclick="Etc()"> &#45;&#45;기타&#45;&#45;</option>-->
+<!--                </select>-->
             </div>
         </div>
     </article>
@@ -178,7 +183,7 @@
             </div>
             <div class="modal-body">
                 <textarea class="textarea"
-                                                  placeholder="무슨 생각을 하고 계신가요?"></textarea>
+                          placeholder="무슨 생각을 하고 계신가요?"></textarea>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -194,11 +199,13 @@
 
 
 </div>
+
+
 </section>
-<footer class="footer mt-3">
+<footer style="color:white; background-color: #110808" class="footer mt-3">
     <div class="content has-text-centered">
         <p>
-            <strong>hanghae99</strong> by <strong class="has-text-link-dark">4 TEAM</strong>
+            <strong style="color:#d7a524">⛵hanghae99</strong> by <strong class="has-text-link-dark">4 TEAM</strong>
             &nbsp;| &nbsp;<strong class="has-text-link-dark">Project : </strong> 날씨야 뭐볼래?!
             &nbsp;| &nbsp;<strong class="has-text-link-dark">Dev.</strong> 김윤하, 김태균, 오경은, 오진우
         </p>

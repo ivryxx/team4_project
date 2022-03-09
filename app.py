@@ -38,6 +38,7 @@ moviedata = BeautifulSoup(movie_data.text, 'html.parser')
 movies = moviedata.select('#content > div.article > div:nth-child(1) > div.lst_wrap > ul > li')
 
 # 반복문 돌면서 아래 코드 실행
+db.movieData.drop()
 for movie in movies:
     title = movie.select_one('dl > dt > a').text
     if title is not None:
