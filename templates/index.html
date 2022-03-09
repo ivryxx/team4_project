@@ -22,7 +22,7 @@
         $(document).ready(function () {
             listing();
             show_weather();
-        })
+        });
 
         function listing() {
             $.ajax({
@@ -32,8 +32,6 @@
                 success: function (response) {
                     let rows = response['movies']
                     console.log(rows)
-                    let option = $('#option').val()
-                    console.log(option)
                     for (let i = 0; i < rows.length; i++) {
                         let movieName = rows[i]['movieNm']
                         let movieImage = rows[i]['movieImg']
@@ -41,10 +39,9 @@
                         let movieJenre = rows[i]['movieJnr']
 
                         console.log(movieName, movieScore, movieJenre, movieImage)
-                        let temp_html = `<li><img src="${movieImage}" style="width:170px; height:250px;"
-                                             class="images" alt="..."></li>`
+                        let temp_html = `<li><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="${movieImage}" style="width:170px; height:250px;"
+                                             class="images" alt="..."></button></li>`
                         $('#movie').append(temp_html)
-
                     }
                 }
             });
@@ -69,16 +66,21 @@
                         let wind = rows[i]['wind']
 
                         let temp_html = `<li>
-                            <p>위치 : ${location}</p>
-                            <p>현재 날씨 : ${weather}</p>
-                            <p>기온 : ${temperature}</p>
-                            <p>습도 : ${humidity}</p>
-                            <p>바람 : ${wind}</p>
+                <div class="my-weatherbox">
+                        <div class="box">
+                            <p align="center"><span> ☀ </span>
+                            위치 : ${location}<span> ☀ </span>
+                            현재 날씨 : ${weather}<span> ☀ </span>
+                            기온 : ${temperature}<span> ☀ </span>
+                            습도 : ${humidity}<span> ☀ </span>
+                            바람 : ${wind}</p>
+                        </div>
+                        </div>
                             </li>`
                         $('#weather').append(temp_html)
 
                     }
-                }
+                },
             })
         }
 
@@ -129,9 +131,8 @@
 
 </head>
 <body>
-
-<nav class="navbar is-light" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
+<nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand" style="justify-content: center;">
         <a class="navbar-item" href="/">
             <p class="title">날씨야 뭐볼래?! &nbsp;| </p>
         </a>
@@ -144,7 +145,7 @@
 </nav>
 
 <div class="weather_info">
-    <h1>날씨 정보입니다</h1>
+    <!--    <h3><span>Weather</span></h3>-->
     <ul id="weather"></ul>
 
 
@@ -161,7 +162,7 @@
         <div class="media-content">
             <div class="field">
                 <p class="control">
-                    <input id="input-post" class="input is-rounded" style="width:500px;" placeholder="무슨 생각을 하고 계신가요?"
+                    <input id="input-post" class="input is-rounded" placeholder="무슨 생각을 하고 계신가요?"
                            onclick='$("#modal-post").addClass("is-active")'></p>
                 <div class="select">
                     <select class="option" id="option">
@@ -210,12 +211,30 @@
                 onclick='$("#modal-post").removeClass("is-active")'></button>
     </div>
 </section>
+
+
+<!--<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
+<!--    <div class="modal-dialog">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>-->
+<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <textarea class="textarea"-->
+<!--                                                  placeholder="무슨 생각을 하고 계신가요?"></textarea>-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+<!--                <button type="button" class="btn btn-primary">Save changes</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
 <div class="slide_wrapper">
     <div class="slides" id="movie">
     </div>
-</div>
-</div>
-
 </div>
 </section>
 <footer class="footer mt-3">
@@ -230,3 +249,54 @@
 
 </body>
 </html>
+
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
+<!--<div class="snowflake"></div>-->
