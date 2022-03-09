@@ -44,48 +44,21 @@ input::-webkit-calendar-picker-indicator {
 .is-white {
     justify-content: center;
 }
-
-.card{
-    width: 95%;
-    align-items: center;
-}
-.card_arr{
-    /*현재 영역에서 FLEX 컨테이너 사용*/
-    display: flex;
-    /*아이템 배치는 왼쪽 기준 가로 형태*/
-    flex-direction: row;
-    /*메인 축 방향 정렬*/
-    justify-content: center;
-    /*수직 축 방향 정렬*/
-    align-items: center;
-    background-color: pink;
-}
-.card_body{
-    /*아이템이 컨테이너에서 늘어날때 맞춰서 지정된 비율로 나누어지도록 결정하는 속성*/
-    flex-grow: 1;
-    /*아이템이 컨테이너에서 줄어들때 맞춰서 지정된 비율로 나누어지도록 결정하는 속성*/
-    flex-shrink: 1;
-    /*아이템의 기본 크기 flex-direction row : 너비 , column 높이 */
-    flex-basis: 0;
-
-}
-.card_element{
-    display: flex;
-    flex-direction: column;
-
-}
-.card_img{
-    margin:auto;
-}
-.card_img > img{
-    width: 200px;
+li{list-style: none;}
+.slide_wrapper{
+    position: relative;
+    width: 1600px;
+    margin: 0 auto;
     height: 300px;
-    object-fit: fill;
 }
-.card_desc{
-    background-color: aqua;
-    font-size: 0.2em;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.slides{
+    position: absolute;
+    left: 0; top: 0;
+    width: 1700px;
 }
+.slides li:not(:last-child){
+    float: left;
+    margin:20px 30px 20px 20px;
+
+}
+

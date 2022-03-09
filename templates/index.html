@@ -41,8 +41,9 @@
                         let movieJenre = rows[i]['movieJnr']
 
                         console.log(movieName, movieScore, movieJenre, movieImage)
-                        let temp_html = `<img id="card_image" src="${movieImage}">`
-                        $('#card_image').append(temp_html)
+                        let temp_html = `<li><img src="${movieImage}" style="width:170px; height:250px;"
+                                             class="images" alt="..."></li>`
+                        $('#movie').append(temp_html)
                     }
                 }
             });
@@ -57,7 +58,6 @@
                 success: function (response) {
                     let rows = response['weather']
                     console.log(rows)
-
                     let weather = rows[0]['weather']
                     let temperature = rows[0]['temperature']
                     let humidity = rows[0]['humidity']
@@ -152,18 +152,8 @@
                 onclick='$("#modal-post").removeClass("is-active")'></button>
     </div>
 </section>
-
-<div class="card">
-    <div class="row row-cols-1 row-cols-md-5 g-4">
-        <div class="card-arr" onclick="call_modal()">
-            <div class="card_body">
-                <div class="card_element">
-                    <div class="card_img" id="card_image">
-
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="slide_wrapper">
+    <div class="slides" id="movie">
     </div>
 </div>
 
