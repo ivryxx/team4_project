@@ -34,78 +34,32 @@
                         let rows = response['weather']
                         console.log(rows)
 
+                        let location = rows[0]['location']
                         let weather = rows[0]['weather']
-                        let temp_html = `<li>${weather}</li>`
-                        $('#weather').append(temp_html)
+                        // let temp_html = `<li>${weather}</li>`
+                        let temperature = rows[0]['temperature']
+                           let humidity = rows[0]['humidity']
+                           let wind = rows[0]['wind']
+
+                            let temp_html = `<li>
+                            <p>위치 : ${location}</p>
+                            <p>현재 날씨 : ${weather}</p>
+                            <p>기온 : ${temperature}</p>
+                            <p>습도 : ${humidity}</p>
+                            <p>바람 : ${wind}</p>
+                            </li>`
+                            $('#weather').append(temp_html)
                     }
                 })
 
-        $.ajax({
-            type: "GET",
-            url: "/weather",
-            data: {},
-            success: function (response) {
-                let rows = response['weather']
-                console.log(rows)
-
-                let temperature = rows[0]['temperature']
-                let temp_html = `<li>${temperature}</li>`
-                $('#weather').append(temp_html)
             }
-        })
-
-
-        $.ajax({
-            type: "GET",
-            url: "/weather",
-            data: {},
-            success: function (response) {
-                let rows = response['weather']
-                console.log(rows)
-
-                let humidity = rows[0]['humidity']
-                let temp_html = `<li>${humidity}</li>`
-                $('#weather').append(temp_html)
-            }
-        })
-
-        $.ajax({
-            type: "GET",
-            url: "/weather",
-            data: {},
-            success: function (response) {
-                let rows = response['weather']
-                console.log(rows)
-
-                let wind = rows[0]['wind']
-                let temp_html = `<li>${wind}</li>`
-                $('#weather').append(temp_html)
-            }
-        })
-    }
 
 
 
 
-                                            // <li>${wind}</li>
 
-
-                        // let temp_html = `<li>${weather} , ${temperature} , ${humidity} , ${wind}</li>`
-                        // $('#weather-list').append(temp_html)
 
     </script>
-
-<!--                    for (let i = 0; i < rows.length; i++) {-->
-<!--                        let title = rows[i]['title']-->
-<!--                        let image = rows[i]['image']-->
-<!--                        console.log(title, image)-->
-
-
-
-
-    <!-- JS -->
-<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
-<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>-->
 
 
 
@@ -115,15 +69,16 @@
 <nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
     <div class="navbar-brand" style="justify-content: center;">
         <a class="navbar-item" href="/">
-            {#            <img src="{{ url_for('static', filename='logo.png') }}">#}
+            {# <img src="{{ url_for('static', filename='logo.png') }}">#}
             <strong class="is-sparta"
                     style="font-family: 'Stylish', sans-serif;font-size: larger;">☀️☁️날씨야 뭐볼까🌧☃️</strong>
         </a>
     </div>
 </nav>
 <div class="weather_info">
-    <h1>날씨 정보입니다</h1>
+    <h3><span>Weather</span></h3>
     <ul id="weather"></ul>
+
 </div>
 
 </body>
