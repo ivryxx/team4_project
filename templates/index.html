@@ -78,6 +78,18 @@
                 }
             })
         }
+        function Sun() {
+
+        }
+        function Cloudy() {
+
+        }
+        function Rain() {
+
+        }
+        function Snow() {
+
+        }
 
 
     </script>
@@ -116,8 +128,17 @@
         <div class="media-content">
             <div class="field">
                 <p class="control">
-                    <input id="input-post" class="input is-rounded" placeholder="무슨 생각을 하고 계신가요?"
+                    <input id="input-post" class="input is-rounded" style="width:500px;" placeholder="무슨 생각을 하고 계신가요?"
                            onclick='$("#modal-post").addClass("is-active")'></p>
+                <div class="select">
+                    <select>
+                        <option> 오늘의 날씨는? </option>
+                        <option onclick="Sun()"> 🌞맑음 </option>
+                        <option onclick="Cloudy()"> 🌫흐림 </option>
+                        <option onclick="Rain()"> 💧비 </option>
+                        <option onclick="Snow()"> ⛄눈 </option>
+                    </select>
+                </div>
             </div>
         </div>
     </article>
@@ -155,7 +176,7 @@
                 onclick='$("#modal-post").removeClass("is-active")'></button>
     </div>
 </section>
-    <div class="slide_wrapper">
+<div class="slide_wrapper">
     <div class="slides" id="movie">
     </div>
 </div>
