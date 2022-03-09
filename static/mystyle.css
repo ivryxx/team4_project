@@ -44,17 +44,3 @@ input::-webkit-calendar-picker-indicator {
 .is-white {
     justify-content: center;
 }
-
-.flex-container {
-    display: flex;
-    justify-content: space-evenly;
-
-}
-
-.flex-item {
-    width: 20%;
-    height: 150px;
-    margin: 10px;
-    background-color: darksalmon;
-}
-

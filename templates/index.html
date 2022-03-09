@@ -21,6 +21,33 @@
 
 
     <script>
+        $(document).ready(function () {
+            listing();
+        })
+
+        function listing() {
+            $.ajax({
+                type: 'GET',
+                url: '/movieData',
+                data: {},
+                success: function (response) {
+                    let rows = response['movies']
+                    console.log(rows)
+                    for (let i = 0; i < rows.length; i++) {
+                        let movieName = rows[i]['movieNm']
+                        let movieImage = rows[i]['movieImg']
+                        let movieScore = rows[i]['movieScr']
+                        let movieJenre = rows[i]['movieJnr']
+
+                        console.log(movieName, movieScore, movieJenre, movieImage)
+                        let temp_html = `<div class="column">
+                                            <img src="${movieImage}">
+                                        </div>`
+                        $('#movie-list').append(temp_html)
+                    }
+                }
+            });
+        }
     </script>
 
 </head>
@@ -34,56 +61,52 @@
     </div>
 </nav>
 
-
-<div class="flex-container">
-{#    <img class="flex-item" id="movieImage" src="{{ movieImg }}">item 1</img>#}
-    <div class="flex-item">item 2</div>
-    <div class="flex-item">item 3</div>
-    <div class="flex-item">item 4</div>
-</div>
-<div class="flex-container">
-    <div class="flex-item">item 1</div>
-    <div class="flex-item">item 2</div>
-    <div class="flex-item">item 3</div>
-    <div class="flex-item">item 4</div>
-
-</div>
-<div class="flex-container">
-    <div class="flex-item">item 1</div>
-    <div class="flex-item">item 2</div>
-    <div class="flex-item">item 3</div>
-    <div class="flex-item">item 4</div>
-
-</div>
-<div class="flex-container">
-    <div class="flex-item">item 1</div>
-    <div class="flex-item">item 2</div>
-    <div class="flex-item">item 3</div>
-    <div class="flex-item">item 4</div>
-
+<div class="columns" id="move-list" style="text-align: center">
+    <div class="column">
+        first column
+    </div>
+    <div class="column">
+        Second column
+    </div>
+    <div class="column">
+        Third column
+    </div>
+    <div class="column">
+        Fourth column
+    </div>
+    <div class="column">
+        Fifth column
+    </div>
 </div>
 
-{#    <table class="table">#}
-{#        <tbody>#}
-{#        <tr >#}
-{#            <td>#}
-{#                <img src="https://bulma.io/images/placeholders/1280x960.png" style="width: 100%"/>#}
-{#            </td>#}
-{#            <td>#}
-{#                <img src="https://bulma.io/images/placeholders/1280x960.png" style="width: 100%"/>#}
-{#            </td>#}
-{#            <td>#}
-{#                <img src="https://bulma.io/images/placeholders/1280x960.png" style="width: 100%"/>#}
-{#            </td>#}
-{#            <td>#}
-{#                <img src="https://bulma.io/images/placeholders/1280x960.png" style="width: 100%"/>#}
-{#            </td>#}
-{#        </tr>#}
-{#        </tbody>#}
-{#    </table>#}
+{#<div class="mycards">#}
+{#    <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box">#}
+{##}
+{#    </div>#}
+{#</div>#}
+{##}
+{#<div id="slideShow">#}
+{#    <ul class="slides" id="movie_slide">#}
+{#        <li><img src="image/flower.jpg" alt=""></li>#}
+{#        <li><img src="image/fox.jpg" alt=""></li>#}
+{#        <li><img src="image/lightning.jpg" alt=""></li>#}
+{#        <li><img src="image/moon.jpg" alt=""></li>#}
+{#        <li><img src="image/nature.jpg" alt=""></li>#}
+{#        <li><img src="image/space.jpg" alt=""></li>#}
+{#    </ul>#}
+{#    <p class="controller">#}
+{#        <!-- &lang: 왼쪽 방향 화살표#}
+{#        &rang: 오른쪽 방향 화살표 -->#}
+{#        <span class="prev"></span>#}
+{#        <span class="next">&rang;</span>#}
+{#    </p>#}
+{#</div>#}
+
 
 
 <section class="section">
+
+
     <div id="post-box" class="container">
         <div class="box">
             <article class="media">
