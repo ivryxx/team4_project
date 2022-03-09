@@ -32,6 +32,8 @@
                 success: function (response) {
                     let rows = response['movies']
                     console.log(rows)
+                    let option = $('#option').val()
+                    console.log(option)
                     for (let i = 0; i < rows.length; i++) {
                         let movieName = rows[i]['movieNm']
                         let movieImage = rows[i]['movieImg']
@@ -42,6 +44,7 @@
                         let temp_html = `<li><img src="${movieImage}" style="width:170px; height:250px;"
                                              class="images" alt="..."></li>`
                         $('#movie').append(temp_html)
+
                     }
                 }
             });
@@ -78,19 +81,49 @@
                 }
             })
         }
-        function Sun() {
 
-        }
+        // function Sun() {
+        //     $('#movie').empty()
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: '/movieData',
+        //         data: {},
+        //         success: function (response) {
+        //             let rows = response['movies']
+        //             console.log(rows)
+        //             let option = $('#option').val()
+        //             console.log(option)
+        //             for (let i = 0; i < rows.length; i++) {
+        //                 let movieImage = rows[i]['movieImg']
+        //                 let movieJenre = rows[i]['movieJnr']
+        //
+        //                 let selected_value = $("#option").val()
+        //                 if(selected_value === '맑음'){
+        //                     movieJenre
+        //                 }
+        //                 let temp_html = `<li><img src="${movieImage}" style="width:170px; height:250px;"
+        //                                      class="images" alt="..."></li>`
+        //                 $('#movie').append(temp_html)
+        //             }
+        //         }
+        //     });
+        // }
+
         function Cloudy() {
-
+            consolel
         }
+
         function Rain() {
 
         }
+
         function Snow() {
 
         }
 
+        function Etc() {
+
+        }
 
     </script>
 
@@ -131,12 +164,13 @@
                     <input id="input-post" class="input is-rounded" style="width:500px;" placeholder="무슨 생각을 하고 계신가요?"
                            onclick='$("#modal-post").addClass("is-active")'></p>
                 <div class="select">
-                    <select>
-                        <option> 오늘의 날씨는? </option>
-                        <option onclick="Sun()"> 🌞맑음 </option>
-                        <option onclick="Cloudy()"> 🌫흐림 </option>
-                        <option onclick="Rain()"> 💧비 </option>
-                        <option onclick="Snow()"> ⛄눈 </option>
+                    <select class="option" id="option">
+                        <option> 오늘의 날씨는?</option>
+                        <option class="Sun" id="Sun" onclick="Sun()"> 🌞맑음</option>
+                        <option class="Cloudy" id="Cloudy" onclick="Cloudy()"> 🌫흐림</option>
+                        <option class="Rain" id="Rain" onclick="Rain()"> 💧비</option>
+                        <option class="Snow" id="Snow" onclick="Snow()"> ⛄눈</option>
+                        <option class="Etc" id="Etc" onclick="Etc()"> --기타--</option>
                     </select>
                 </div>
             </div>
