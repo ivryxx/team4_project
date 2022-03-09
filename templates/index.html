@@ -41,13 +41,8 @@
                         let movieJenre = rows[i]['movieJnr']
 
                         console.log(movieName, movieScore, movieJenre, movieImage)
-                        let temp_html = `<div class="card">
-                                          <div class="card-image">
-                                            <figure class="image is-3by4">
-                                              <img src="${movieImage}" alt="Movie image">
-                                            </figure>
-                                          </div>
-                                        </div>`
+                        let temp_html = `<li><img src="${movieImage}" style="width:170px; height:250px;"
+                                             class="images" alt="..."></li>`
                         $('#movie').append(temp_html)
                     }
                 }
@@ -157,26 +152,10 @@
                 onclick='$("#modal-post").removeClass("is-active")'></button>
     </div>
 </section>
-
-<div class="columns">
-    <div class="column">
-        <h1>영화 리스트입니다</h1>
-        <ul id="movie"></ul>
-    </div>
-    <div class="column">
-        <h1>영화 리스트입니다</h1>
-        <ul id="movie"></ul>
-    </div>
-    <div class="column">
-        <h1>영화 리스트입니다</h1>
-        <ul id="movie"></ul>
-    </div>
-    <div class="column">
-        <h1>영화 리스트입니다</h1>
-        <ul id="movie"></ul>
+<div class="slide_wrapper">
+    <div class="slides" id="movie">
     </div>
 </div>
-
 <footer class="footer mt-3">
     <div class="content has-text-centered">
         <p>

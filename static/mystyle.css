@@ -44,3 +44,21 @@ input::-webkit-calendar-picker-indicator {
 .is-white {
     justify-content: center;
 }
+li{list-style: none;}
+.slide_wrapper{
+    position: relative;
+    width: 1600px;
+    margin: 0 auto;
+    height: 300px;
+}
+.slides{
+    position: absolute;
+    left: 0; top: 0;
+    width: 1700px;
+}
+.slides li:not(:last-child){
+    float: left;
+    margin:20px 30px 20px 20px;
+
+}
+
