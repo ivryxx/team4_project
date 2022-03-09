@@ -2,6 +2,8 @@ from pymongo import MongoClient
 import jwt
 import datetime
 import hashlib
+import requests
+from bs4 import BeautifulSoup
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
@@ -164,10 +166,10 @@ def check_dup():
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
-@app.route("/weather", methods=["GET"])
-def show_weather():
-    weather_list = list(db.weather1.find({}, {'_id': False}))
-
+# @app.route("/weather", methods=["GET"])
+# def show_weather():
+#     weather_list = list(db.weather1.find({}, {'_id': False}))
+#
 
 @app.route('/posting', methods=['POST'])
 def posting():

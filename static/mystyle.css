@@ -67,17 +67,17 @@ li{list-style: none;}
 }
 
 
-html, body {
-	 /*padding: 0;*/
-	 margin: 0;
-	 width: 100vw;
-	 height: 500px;
-     min-height: 100vh;
-     padding-top: 3.25rem;
-	 position: relative;
-	 overflow: hidden;
-	 /*background: linear-gradient(#123, #111);*/
-}
+/*html, body {*/
+/*	 !*padding: 0;*!*/
+/*	 margin: 0;*/
+/*	 width: 100vw;*/
+/*	 height: 500px;*/
+/*     min-height: 100vh;*/
+/*     padding-top: 3.25rem;*/
+/*	 position: relative;*/
+/*	 overflow: hidden;*/
+/*	 !*background: linear-gradient(#123, #111);*!*/
+/*}*/
  .snowflake {
 	 --size: 1vw;
 	 width: var(--size);
