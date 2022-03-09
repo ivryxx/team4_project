@@ -45,15 +45,19 @@ input::-webkit-calendar-picker-indicator {
     justify-content: center;
 }
 li{list-style: none;}
-.slide_wrapper{
+.slide_wrapper {
     position: relative;
+    max-width: 95%;
     width: 1600px;
     margin: 0 auto;
     height: 300px;
 }
-.slides{
+
+.slides {
     position: absolute;
-    left: 0; top: 0;
+    left: 0;
+    top: 0;
+    max-width: 100%;
     width: 1700px;
 }
 .slides li:not(:last-child){
