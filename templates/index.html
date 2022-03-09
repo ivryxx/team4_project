@@ -4,7 +4,7 @@
 
 
     <!-- Webpage Title -->
-    <title>Home | 날씨야 뭐볼까?</title>
+    <title>Home | 날씨야 뭐볼래?</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
@@ -46,7 +46,7 @@
                         let movieJenre = rows[i]['movieJnr']
 
                         console.log(movieName, movieScore, movieJenre, movieImage)
-                        let temp_html = `<li><button><img src="${movieImage}" style="width:170px; height:250px;"
+                        let temp_html = `<li><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="${movieImage}" style="width:170px; height:250px;"
                                              class="images" alt="..."></button></li>`
                         $('#movie').append(temp_html)
                     }
@@ -75,7 +75,7 @@
                         let wind = rows[i]['wind']
 
                         let temp_html = `<li>
-<div class="my-weatherbox">
+                <div class="my-weatherbox">
                         <div class="box">
                             <p align="center"><span> ☀ </span>
                             위치 : ${location}<span> ☀ </span>
@@ -102,13 +102,13 @@
 <nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
     <div class="navbar-brand" style="justify-content: center;">
         <a class="navbar-item" href="/">
-            <p class="title">날씨야 뭐볼래?! &nbsp;| </p>
+            <p class="title">☔⛄날씨야 뭐볼래?!🌞🎬</p>
         </a>
         <!-- 로그인하면 보이는 회원 이름 -->
-        <a class="navbar-item">
-            <p class="title3 user-name" id="user-name"><strong class="has-text-link">{{ user_id }}</strong> 님, 안녕하세요!
-            </p>
-        </a>
+<!--        <a class="navbar-item">-->
+<!--            <p class="title3 user-name" id="user-name"><strong class="has-text-link">{{ user_id }}</strong> 님, 안녕하세요!-->
+<!--            </p>-->
+<!--        </a>-->
     </div>
 </nav>
 <div class="weather_info">
@@ -169,24 +169,24 @@
 </section>
 
 
-<!--<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
-<!--    <div class="modal-dialog">-->
-<!--        <div class="modal-content">-->
-<!--            <div class="modal-header">-->
-<!--                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>-->
-<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--            </div>-->
-<!--            <div class="modal-body">-->
-<!--                <textarea class="textarea"-->
-<!--                                                  placeholder="무슨 생각을 하고 계신가요?"></textarea>-->
-<!--            </div>-->
-<!--            <div class="modal-footer">-->
-<!--                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
-<!--                <button type="button" class="btn btn-primary">Save changes</button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <textarea class="textarea"
+                                                  placeholder="무슨 생각을 하고 계신가요?"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="slide_wrapper">
     <div class="slides" id="movie">
