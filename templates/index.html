@@ -21,19 +21,54 @@
 
 
     <script>
+
+            $(document).ready(function () {
+                show_weather();
+                });
+            function show_weather() {
+                $.ajax({
+                    type: "GET",
+                    url :"/weather",
+                    data: {},
+                    success : function(response) {
+                        let rows= response['weather']
+                        console.log(rows)
+
+                           let weather = rows[0]['weather']
+                            let temp_html = `<li>${weather}</li>`
+                            $('#weather').append(temp_html)
+
+                        }
+            })
+        }
+
+
     </script>
 
 </head>
 <body>
-<nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand" style="justify-content: center;">
+
+<nav class="navbar is-light" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
         <a class="navbar-item" href="/">
-            {#            <img src="{{ url_for('static', filename='logo.png') }}">#}
-            <strong class="is-sparta"
-                    style="font-family: 'Stylish', sans-serif;font-size: larger;">☀️☁️날씨야 뭐볼까🌧☃️</strong>
+            <p class="title">날씨야 뭐볼래?! &nbsp;| </p>
+        </a>
+        <!-- 로그인하면 보이는 회원 이름 -->
+        <a class="navbar-item">
+            <p class="title3 user-name" id="user-name"><strong class="has-text-link">{{ user_id }}</strong> 님, 안녕하세요!
+            </p>
         </a>
     </div>
 </nav>
+
+<div class="weather_info">
+    <h1>날씨 정보입니다</h1>
+    <ul id="weather"></ul>
+
+</div>
+
+
+
 <section class="section">
     <article class="media">
         <figure class="media-left" style="align-self: center">
@@ -117,5 +152,15 @@
 
     </div>
 </section>
+<footer class="footer mt-3">
+  <div class="content has-text-centered">
+    <p>
+        <strong>hanhae99</strong> by <strong class="has-text-link-dark">4 TEAM</strong>
+        &nbsp;| &nbsp;<strong class="has-text-link-dark">Project : </strong> 날씨야 뭐볼래?!
+        &nbsp;| &nbsp;<strong class="has-text-link-dark">Dev.</strong>  김윤하, 김태균, 오경은, 오진우
+    </p>
+  </div>
+</footer>
+
 </body>
 </html>
