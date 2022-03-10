@@ -38,14 +38,18 @@
                     let rows = response['movies']
                     console.log(rows)
                     for (let i = 0; i < rows.length; i++) {
+                        let default_url = "https://movie.naver.com"
                         let movieName = rows[i]['movieNm']
                         let movieImage = rows[i]['movieImg']
                         let movieScore = rows[i]['movieScr']
                         let movieJenre = rows[i]['movieJnr']
+                        let movieUrl = rows[i]['movieLink']
 
-                        console.log(movieName, movieScore, movieJenre, movieImage)
-                        let temp_html = `<li><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="${movieImage}" style="width:170px; height:250px;"
-                                             class="images" alt="..."></button></li>`
+                        console.log( movieUrl)
+                        let temp_html = `<li><button onclick="openImageModal()"><img src="${movieImage}" style="width:170px; height:250px;"
+                                             class="images" ></button></li>
+
+<a href="${default_url} '+' ${movieUrl}" target="_blank">예매하기</a>`
                         $('#movie').append(temp_html)
                     }
                 }
@@ -90,6 +94,12 @@
         }
 
 
+        // 이미지 출력 모달창 오픈
+        function openImageModal() {
+            $('#fileModal').show()
+        }
+
+
     </script>
 
 </head>
@@ -125,6 +135,25 @@
                 <p class="control">
                     <input id="input-post" class="input is-rounded" placeholder="무슨 생각을 하고 계신가요?"
                            onclick='$("#modal-post").addClass("is-active")'></p>
+                <p class="control">
+                    <input id="input-text" class="input is-rounded" placeholder="무슨 생각을 하고 계신가요?"
+                           onclick='$("#modal-post").addClass("is-active")'></p>
+
+                <!-- 모달창 -->
+                <div id="fileModal" class="modal_fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header modal-header-sm">
+                                <h6 class="modal-title">사진/동영상 보기</h6>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <div id="file-viewer"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </article>

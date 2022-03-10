@@ -47,13 +47,16 @@ for movie in movies:
         movieImage = movie.select_one('div > a > img')['src']
         movieScore = movie.select_one('dl > dd.star > dl.info_star > dd > div > a > span.num').text
         movieJenre = movie.select_one('dl > dd:nth-child(3) > dl > dd:nth-child(2) > span.link_txt > a:nth-child(1)').text
-        # print(movieName, movieImage, movieScore, movieJenre)
+        movielink = movie.select_one('dl > dd.info_t1 > div > a')['href']
+
 
         doc = {
             'movieNm': movieName,
             'movieImg': movieImage,
             'movieScr': movieScore,
-            'movieJnr': movieJenre
+            'movieJnr': movieJenre,
+            'movielink': movielink
+
         }
         db.movieData.insert_one(doc)
 
