@@ -26,7 +26,6 @@
 
     <script>
 
-
         $(document).ready(function () {
             listing();
             show_weather();
@@ -42,14 +41,20 @@
                     let rows = response['movies']
                     console.log(rows)
                     for (let i = 0; i < rows.length; i++) {
+                        let default_url = "https://movie.naver.com/movie/bi/mi/running.naver?code="
                         let movieName = rows[i]['movieNm']
                         let movieImage = rows[i]['movieImg']
                         let movieScore = rows[i]['movieScr']
                         let movieJenre = rows[i]['movieJnr']
+                        let movieUrl = rows[i]['movielink'].split("=")[1]
+                        let totalMovieUrl = default_url + movieUrl
 
-                        console.log(movieName, movieScore, movieJenre, movieImage)
-                        let temp_html = `<li><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="${movieImage}" style="width:170px; height:250px;"
-                                             class="images" alt="..."></button></li>`
+
+                        let temp_html = `<li><a href="${totalMovieUrl}" target="_blank"><button type="button" class="btn btn-outline-danger"><img src="${movieImage}" style="width:170px; height:250px;"
+                                             class="images" ></button></a></li>`
+                         console.log(movieUrl)
+
+
                         $('#movie').append(temp_html)
                     }
                 }
@@ -126,14 +131,14 @@
                 <p class="control">
                     <input id="input-post" class="input is-rounded" placeholder="무슨 생각을 하고 계신가요?"
                            onclick='$("#modal-post").addClass("is-active")'></p>
-<!--                <select class="option" id="option">-->
-<!--                    <option> 오늘의 날씨는?</option>-->
-<!--                    <option class="Sun" id="Sun" onclick="Sun()"> 🌞맑음</option>-->
-<!--                    <option class="Cloudy" id="Cloudy" onclick="Cloudy()"> 🌫흐림</option>-->
-<!--                    <option class="Rain" id="Rain" onclick="Rain()"> 💧비</option>-->
-<!--                    <option class="Snow" id="Snow" onclick="Snow()"> ⛄눈</option>-->
-<!--                    <option class="Etc" id="Etc" onclick="Etc()"> &#45;&#45;기타&#45;&#45;</option>-->
-<!--                </select>-->
+                <!--                <select class="option" id="option">-->
+                <!--                    <option> 오늘의 날씨는?</option>-->
+                <!--                    <option class="Sun" id="Sun" onclick="Sun()"> 🌞맑음</option>-->
+                <!--                    <option class="Cloudy" id="Cloudy" onclick="Cloudy()"> 🌫흐림</option>-->
+                <!--                    <option class="Rain" id="Rain" onclick="Rain()"> 💧비</option>-->
+                <!--                    <option class="Snow" id="Snow" onclick="Snow()"> ⛄눈</option>-->
+                <!--                    <option class="Etc" id="Etc" onclick="Etc()"> &#45;&#45;기타&#45;&#45;</option>-->
+                <!--                </select>-->
             </div>
         </div>
     </article>
@@ -215,53 +220,3 @@
 </body>
 </html>
 
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
