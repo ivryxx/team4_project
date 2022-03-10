@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
 
+
     <!-- Webpage Title -->
-    <title>Home | 날씨야 뭐볼까?</title>
+    <title>Home | 날씨야 뭐볼래?</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -46,12 +48,13 @@
                         let movieUrl = rows[i]['movielink'].split("=")[1]
                         let totalMovieUrl = default_url + movieUrl
 
-                        let temp_html = `<li><a href="${totalMovieUrl}" target="_blank"><button><img src="${movieImage}" style="width:170px; height:250px;"
-                                             class="images"></button></a></li>`
-                        console.log(movieUrl)
+
+                        let temp_html = `<li><a href="${totalMovieUrl}" target="_blank"><button type="button" class="btn btn-outline-danger"><img src="${movieImage}" style="width:170px; height:250px;"
+                                             class="images" ></button></a></li>`
+                         console.log(movieUrl)
+
 
                         $('#movie').append(temp_html)
-
                     }
                 }
             });
@@ -59,6 +62,7 @@
 
 
         function show_weather() {
+
 
             $.ajax({
                 type: "GET",
@@ -78,7 +82,7 @@
 
                         let temp_html = `<li>
                 <div class="my-weatherbox">
-                        <div class="box">
+                        <div style="color:white; background-color: #340303" class="box">
                             <p align="center"><span> ☀ </span>
                             위치 : ${location}<span> ☀ </span>
                             현재 날씨 : ${weather}<span> ☀ </span>
@@ -94,30 +98,20 @@
             })
         }
 
-
-        // 이미지 출력 모달창 오픈
-        function openImageModal() {
-            $('#fileModal').show()
-        }
-
+        $('#exampleModal').modal(options)
 
     </script>
+
 
 </head>
 <body>
 <nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
     <div class="navbar-brand" style="justify-content: center;">
         <a class="navbar-item" href="/">
-            <p class="title">날씨야 뭐볼래?! &nbsp;| </p>
-        </a>
-        <!-- 로그인하면 보이는 회원 이름 -->
-        <a class="navbar-item">
-            <p class="title3 user-name" id="user-name"><strong class="has-text-link">{{ user_id }}</strong> 님, 안녕하세요!
-            </p>
+            <p class="title">☔⛄날씨야 뭐볼래?!🌞🎬</p>
         </a>
     </div>
 </nav>
-
 <div class="weather_info">
     <!--    <h3><span>Weather</span></h3>-->
     <ul id="weather"></ul>
@@ -136,23 +130,14 @@
                 <p class="control">
                     <input id="input-post" class="input is-rounded" placeholder="무슨 생각을 하고 계신가요?"
                            onclick='$("#modal-post").addClass("is-active")'></p>
-
-
-                <!-- 모달창 -->
-                <div id="fileModal" class="modal_fade" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header modal-header-sm">
-                                <h6 class="modal-title">사진/동영상 보기</h6>
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            </div>
-                            <div class="modal-body text-center">
-                                <div id="file-viewer"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <!--                <select class="option" id="option">-->
+                <!--                    <option> 오늘의 날씨는?</option>-->
+                <!--                    <option class="Sun" id="Sun" onclick="Sun()"> 🌞맑음</option>-->
+                <!--                    <option class="Cloudy" id="Cloudy" onclick="Cloudy()"> 🌫흐림</option>-->
+                <!--                    <option class="Rain" id="Rain" onclick="Rain()"> 💧비</option>-->
+                <!--                    <option class="Snow" id="Snow" onclick="Snow()"> ⛄눈</option>-->
+                <!--                    <option class="Etc" id="Etc" onclick="Etc()"> &#45;&#45;기타&#45;&#45;</option>-->
+                <!--                </select>-->
             </div>
         </div>
     </article>
@@ -193,34 +178,38 @@
 </section>
 
 
-<!--<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
-<!--    <div class="modal-dialog">-->
-<!--        <div class="modal-content">-->
-<!--            <div class="modal-header">-->
-<!--                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>-->
-<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--            </div>-->
-<!--            <div class="modal-body">-->
-<!--                <textarea class="textarea"-->
-<!--                                                  placeholder="무슨 생각을 하고 계신가요?"></textarea>-->
-<!--            </div>-->
-<!--            <div class="modal-footer">-->
-<!--                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
-<!--                <button type="button" class="btn btn-primary">Save changes</button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <textarea class="textarea"
+                          placeholder="무슨 생각을 하고 계신가요?"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="slide_wrapper">
     <div class="slides" id="movie">
     </div>
+
+
 </div>
+
+
 </section>
-<footer class="footer mt-3">
+<footer style="color:white; background-color: #110808" class="footer mt-3">
     <div class="content has-text-centered">
         <p>
-            <strong>hanghae99</strong> by <strong class="has-text-link-dark">4 TEAM</strong>
+            <strong style="color:#d7a524">⛵hanghae99</strong> by <strong class="has-text-link-dark">4 TEAM</strong>
             &nbsp;| &nbsp;<strong class="has-text-link-dark">Project : </strong> 날씨야 뭐볼래?!
             &nbsp;| &nbsp;<strong class="has-text-link-dark">Dev.</strong> 김윤하, 김태균, 오경은, 오진우
         </p>
