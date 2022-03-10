@@ -64,6 +64,7 @@ data = requests.get('https://search.naver.com/search.naver?where=nexearch&sm=top
 
 soup = BeautifulSoup(data.text, 'html.parser')
 
+db.weather.drop();
 location = soup.select_one('#main_pack > section.sc_new.cs_weather_new._cs_weather > div._tab_flicking > div.top_wrap > div.title_area._area_panel > h2.title')
 temperature = soup.select_one('#main_pack > section.sc_new.cs_weather_new._cs_weather > div._tab_flicking > div.content_wrap > div.open > div:nth-child(1) > div > div.weather_info > div > div.weather_graphic > div.temperature_text')
 image = soup.select_one('#main_pack > section.sc_new.cs_weather_new._cs_weather > div._tab_flicking > div.content_wrap > div.open > div:nth-child(1) > div > div.weather_info > div > div.weather_graphic > div.weather_main > i')
