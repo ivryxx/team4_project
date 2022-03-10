@@ -8,7 +8,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-    <script src="js/lightbox.min.js"></script>
 
 
     <!-- Required meta tags -->
@@ -52,9 +51,6 @@
 
                         let temp_html = `<li><a href="${totalMovieUrl}" target="_blank"><button type="button" class="btn btn-outline-danger"><img src="${movieImage}" style="width:170px; height:250px;"
                                              class="images" ></button></a></li>`
-                        console.log(movieUrl)
-
-
                         $('#movie').append(temp_html)
                     }
                 }
@@ -76,7 +72,6 @@
                     for (let i = rows.length - 1; i < rows.length; i++) {
                         let location = rows[i]['location']
                         let weather = rows[i]['weather']
-                        // let temp_html = `<li>${weather}</li>`
                         let temperature = rows[i]['temperature']
                         let humidity = rows[i]['humidity']
                         let wind = rows[i]['wind']
@@ -98,13 +93,196 @@
                 },
             })
         }
-
-        function getweather() {
+        function getweather(){
             let selected_weather = $("#option option:selected").text();
             console.log(selected_weather);
-            if (selected_weather === "🌞맑음") {
-                Sunmovie();
+            if(selected_weather === "🌞맑음"){
             }
+        }
+        function getweather(){
+            let selected_weather = $("#option option:selected").text();
+            console.log(selected_weather);
+            if(selected_weather === "🌫흐림"){
+            }
+        }
+        function getweather(){
+            let selected_weather = $("#option option:selected").text();
+            console.log(selected_weather);
+            if(selected_weather === "💧비"){
+            }
+        }
+        function getweather(){
+            let selected_weather = $("#option option:selected").text();
+            console.log(selected_weather);
+            if(selected_weather === "⛄눈"){
+            }
+        }
+
+        function getweather(){
+            let selected_weather = $("#option option:selected").text();
+            console.log(selected_weather);
+            if(selected_weather === " --기타--"){
+            }
+        }
+
+        function Sun() {
+            $('#movie').empty()
+            window.location.reload()
+            $.ajax({
+                type: 'GET',
+                url: '/Sunmovie',
+                data: {},
+                success: function (response) {
+                    let rows = response['sun']
+                    console.log(rows)
+                    for (let i = 0; i < rows.length; i++) {
+                        let default_url = "https://movie.naver.com/movie/bi/mi/running.naver?code="
+                        let movieName = rows[i]['movieNm']
+                        let movieImage = rows[i]['movieImg']
+                        let movieScore = rows[i]['movieScr']
+                        let movieJenre = rows[i]['movieJnr']
+                        let movieUrl = rows[i]['movielink'].split("=")[1]
+                        let totalMovieUrl = default_url + movieUrl
+
+
+                        let temp_html = `<li><a href="${totalMovieUrl}" target="_blank"><button type="button" class="btn btn-outline-danger"><img src="${movieImage}" style="width:170px; height:250px;"
+                                             class="images" ></button></a></li>`
+                        console.log(movieUrl)
+
+
+                        $('#movie').append(temp_html)
+                    }
+                }
+            });
+
+        }
+
+        function Cloudy() {
+            $('#movie').empty()
+            window.location.reload()
+            $.ajax({
+                type: 'GET',
+                url: '/Cloudymovie',
+                data: {},
+                success: function (response) {
+                    let rows = response['cloudy']
+                    console.log(rows)
+                    for (let i = 0; i < rows.length; i++) {
+                        let default_url = "https://movie.naver.com/movie/bi/mi/running.naver?code="
+                        let movieName = rows[i]['movieNm']
+                        let movieImage = rows[i]['movieImg']
+                        let movieScore = rows[i]['movieScr']
+                        let movieJenre = rows[i]['movieJnr']
+                        let movieUrl = rows[i]['movielink'].split("=")[1]
+                        let totalMovieUrl = default_url + movieUrl
+
+
+                        let temp_html = `<li><a href="${totalMovieUrl}" target="_blank"><button type="button" class="btn btn-outline-danger"><img src="${movieImage}" style="width:170px; height:250px;"
+                                             class="images" ></button></a></li>`
+                        console.log(movieUrl)
+
+
+                        $('#movie').append(temp_html)
+                    }
+                }
+            });
+
+        }
+
+        function Rain() {
+            $('#movie').empty()
+            window.location.reload()
+            $.ajax({
+                type: 'GET',
+                url: '/Rainmovie',
+                data: {},
+                success: function (response) {
+                    let rows = response['rain']
+                    console.log(rows)
+                    for (let i = 0; i < rows.length; i++) {
+                        let default_url = "https://movie.naver.com/movie/bi/mi/running.naver?code="
+                        let movieName = rows[i]['movieNm']
+                        let movieImage = rows[i]['movieImg']
+                        let movieScore = rows[i]['movieScr']
+                        let movieJenre = rows[i]['movieJnr']
+                        let movieUrl = rows[i]['movielink'].split("=")[1]
+                        let totalMovieUrl = default_url + movieUrl
+
+
+                        let temp_html = `<li><a href="${totalMovieUrl}" target="_blank"><button type="button" class="btn btn-outline-danger"><img src="${movieImage}" style="width:170px; height:250px;"
+                                             class="images" ></button></a></li>`
+                        console.log(movieUrl)
+
+
+                        $('#movie').append(temp_html)
+                    }
+                }
+            });
+
+        }
+
+        function Snow() {
+            $('#movie').empty()
+            window.location.reload()
+            $.ajax({
+                type: 'GET',
+                url: '/Snowmovie',
+                data: {},
+                success: function (response) {
+                    let rows = response['snow']
+                    console.log(rows)
+                    for (let i = 0; i < rows.length; i++) {
+                        let default_url = "https://movie.naver.com/movie/bi/mi/running.naver?code="
+                        let movieName = rows[i]['movieNm']
+                        let movieImage = rows[i]['movieImg']
+                        let movieScore = rows[i]['movieScr']
+                        let movieJenre = rows[i]['movieJnr']
+                        let movieUrl = rows[i]['movielink'].split("=")[1]
+                        let totalMovieUrl = default_url + movieUrl
+
+
+                        let temp_html = `<li><a href="${totalMovieUrl}" target="_blank"><button type="button" class="btn btn-outline-danger"><img src="${movieImage}" style="width:170px; height:250px;"
+                                             class="images" ></button></a></li>`
+                        console.log(movieUrl)
+
+
+                        $('#movie').append(temp_html)
+                    }
+                }
+            });
+
+        }
+
+        function Etc() {
+            $('#movie').empty()
+            window.location.reload()
+            $.ajax({
+                type: 'GET',
+                url: '/Etcmovie',
+                data: {},
+                success: function (response) {
+                    let rows = response['etc']
+                    console.log(rows)
+                    for (let i = 0; i < rows.length; i++) {
+                        let default_url = "https://movie.naver.com/movie/bi/mi/running.naver?code="
+                        let movieName = rows[i]['movieNm']
+                        let movieImage = rows[i]['movieImg']
+                        let movieScore = rows[i]['movieScr']
+                        let movieJenre = rows[i]['movieJnr']
+                        let movieUrl = rows[i]['movielink'].split("=")[1]
+                        let totalMovieUrl = default_url + movieUrl
+
+
+                        let temp_html = `<li><a href="${totalMovieUrl}" target="_blank"><button type="button" class="btn btn-outline-danger"><img src="${movieImage}" style="width:170px; height:250px;"
+                                             class="images" ></button></a></li>`
+                        console.log(movieUrl)
+
+
+                        $('#movie').append(temp_html)
+                    }
+                }
+            });
+
         }
 
 
@@ -113,15 +291,11 @@
 
 </head>
 <body>
-<nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
+<nav style="color:black; background-color: black" class="navbar is-fixed-top is-white" role="navigation"
+     aria-label="main navigation">
     <div class="navbar-brand" style="justify-content: center;">
         <a class="navbar-item" href="/">
-            <p class="title">날씨야 뭐볼래?! &nbsp;| </p>
-        </a>
-        <!-- 로그인하면 보이는 회원 이름 -->
-        <a class="navbar-item">
-            <p class="title3 user-name" id="user-name"><strong class="has-text-link">{{ user_id }}</strong> 님, 안녕하세요!
-            </p>
+            <p style="color:white; background-color: black" class="title">☔⛄날씨야 뭐볼래?!🌞🎬</p>
         </a>
     </div>
 </nav>
@@ -133,27 +307,35 @@
 
 <section class="section">
     <article class="media">
+
         <figure class="media-left" style="align-self: center">
             <a class="image is-32x32" href="/user/{{ user_info.username }}">
                 <img class="is-rounded" src="{{ url_for('static', filename=user_info.profile_pic_real) }}">
             </a>
         </figure>
+
+
         <div class="media-content">
             <div class="field">
                 <p class="control">
                     <input id="input-post" class="input is-rounded" placeholder="무슨 생각을 하고 계신가요?"
                            onclick='$("#modal-post").addClass("is-active")'></p>
             </div>
-            <select class="option" id="option">
-                <option> 오늘의 날씨는?</option>
-                <option class="Sun" id="Sun" value="1"> 🌞맑음</option>
-                <option class="Cloudy" id="Cloudy" value="2"> 🌫흐림</option>
-                <option class="Rain" id="Rain" value="3"> 💧비</option>
-                <option class="Snow" id="Snow" value="4"> ⛄눈</option>
-                <option class="Etc" id="Etc" value="5"> --기타--</option>
-            </select>
         </div>
+
+        <div class="media-content2">
+            <select class="option" id="option" name="location" onclick="getweather()">
+                    <option> 오늘의 날씨는?</option>
+                    <option class="Sun" id="Sun" value="1" > 🌞맑음</option>
+                    <option class="Cloudy" id="Cloudy" value="2" > 🌫흐림</option>
+                    <option class="Rain" id="Rain" value="3" > 💧비</option>
+                    <option class="Snow" id="Snow" value="4" > ⛄눈</option>
+                    <option class="Etc" id="Etc" value="5"> --기타--</option>
+                </select>
+        </div>
+
     </article>
+
     <div class="modal" id="modal-post">
         <div class="modal-background" onclick='$("#modal-post").removeClass("is-active")'></div>
         <div class="modal-content">
@@ -191,25 +373,6 @@
 </section>
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <textarea class="textarea"
-                          placeholder="무슨 생각을 하고 계신가요?"></textarea>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="slide_wrapper">
     <div class="slides" id="movie">
     </div>
@@ -232,53 +395,3 @@
 </body>
 </html>
 
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->
-<!--<div class="snowflake"></div>-->

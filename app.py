@@ -35,11 +35,8 @@ movie_data = requests.get('https://movie.naver.com/movie/running/current.naver',
 moviedata = BeautifulSoup(movie_data.text, 'html.parser')
 
 # 공통 코드 추출
-
-
-
-
 movies = moviedata.select('#content > div.article > div:nth-child(1) > div.lst_wrap > ul > li')
+
 # 반복문 돌면서 아래 코드 실행
 db.movieData.drop();
 for movie in movies:
@@ -63,19 +60,18 @@ for movie in movies:
         }
         db.movieData.insert_one(doc)
 
-
-
 data = requests.get('https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=%EB%82%A0%EC%94%A8',headers=headers)
 
 soup = BeautifulSoup(data.text, 'html.parser')
 
+db.weather.drop();
 location = soup.select_one('#main_pack > section.sc_new.cs_weather_new._cs_weather > div._tab_flicking > div.top_wrap > div.title_area._area_panel > h2.title')
 temperature = soup.select_one('#main_pack > section.sc_new.cs_weather_new._cs_weather > div._tab_flicking > div.content_wrap > div.open > div:nth-child(1) > div > div.weather_info > div > div.weather_graphic > div.temperature_text')
 image = soup.select_one('#main_pack > section.sc_new.cs_weather_new._cs_weather > div._tab_flicking > div.content_wrap > div.open > div:nth-child(1) > div > div.weather_info > div > div.weather_graphic > div.weather_main > i')
 humidity = soup.select_one('#main_pack > section.sc_new.cs_weather_new._cs_weather > div._tab_flicking > div.content_wrap > div.open > div:nth-child(1) > div > div.weather_info > div > div.temperature_info > dl > dd:nth-child(4)')
 wind = soup.select_one('#main_pack > section.sc_new.cs_weather_new._cs_weather > div._tab_flicking > div.content_wrap > div.open > div:nth-child(1) > div > div.weather_info > div > div.temperature_info > dl > dd:nth-child(6)')
 weather = soup.select_one('#main_pack > section.sc_new.cs_weather_new._cs_weather > div._tab_flicking > div.content_wrap > div.open > div:nth-child(1) > div > div.weather_info > div > div.temperature_info > p > span.weather.before_slash')
-# print('습도:', humidity.text ,image, '오늘의 날씨는?', weather.text , '기온:', temperature.text , '바람:',wind.text , location.text)
+print(humidity.text ,image.text, weather.text , temperature.text ,wind.text, location.text)
 
 doc = {
     'weather': weather.text,
@@ -204,30 +200,36 @@ def weather():
     weather_list = list(db.weather.find({}, {'_id': False}))
     return jsonify({'weather': weather_list})
 
-# 영화 전체 데이터
 @app.route("/movieData", methods=["GET"])
 def movie_listing():
     movie_list = list(db.movieData.find({}, {'_id': False}))
     return jsonify({'movies': movie_list})
 
 @app.route("/Sunmovie", methods=["GET"])
-def movie_A():
+def Sun():
     movie_list = list(db.movieData.find({}, {'_id': False}))
-    return jsonify({'Sun': movie_list})
+    return jsonify({'sun': movie_list})
 
+@app.route("/Cloudymovie", methods=["GET"])
+def Cloudy():
+    movie_list = list(db.movieData.find({}, {'_id': False}))
+    return jsonify({'cloudy': movie_list})
 
+@app.route("/Rainmovie", methods=["GET"])
+def Rain():
+    movie_list = list(db.movieData.find({}, {'_id': False}))
+    return jsonify({'rain': movie_list})
 
+@app.route("/Snowmovie", methods=["GET"])
+def Snow():
+    movie_list = list(db.movieData.find({}, {'_id': False}))
+    return jsonify({'snow': movie_list})
 
+@app.route("/Etcmovie", methods=["GET"])
+def Etx():
+    movie_list = list(db.movieData.find({}, {'_id': False}))
+    return jsonify({'etc': movie_list})
 
-@app.route('/update_like', methods=['POST'])
-def update_like():
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        # 좋아요 수 변경
-        return jsonify({"result": "success", 'msg': 'updated'})
-    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("home"))
 
 
 if __name__ == '__main__':
