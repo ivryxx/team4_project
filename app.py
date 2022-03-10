@@ -49,6 +49,8 @@ for movie in movies:
         movieJenre = movie.select_one('dl > dd:nth-child(3) > dl > dd:nth-child(2) > span.link_txt > a:nth-child(1)').text
         movielink = movie.select_one('dl > dd.info_t1 > div > a')['href']
 
+        print(movielink)
+
 
         doc = {
             'movieNm': movieName,
