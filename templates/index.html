@@ -52,7 +52,7 @@
 
                         let temp_html = `<li><a href="${totalMovieUrl}" target="_blank"><button type="button" class="btn btn-outline-danger"><img src="${movieImage}" style="width:170px; height:250px;"
                                              class="images" ></button></a></li>`
-                         console.log(movieUrl)
+                        console.log(movieUrl)
 
 
                         $('#movie').append(temp_html)
@@ -76,7 +76,6 @@
                     for (let i = rows.length - 1; i < rows.length; i++) {
                         let location = rows[i]['location']
                         let weather = rows[i]['weather']
-                        // let temp_html = `<li>${weather}</li>`
                         let temperature = rows[i]['temperature']
                         let humidity = rows[i]['humidity']
                         let wind = rows[i]['wind']
@@ -99,8 +98,6 @@
             })
         }
 
-        $('#exampleModal').modal(options)
-
     </script>
 
 
@@ -121,27 +118,35 @@
 
 <section class="section">
     <article class="media">
+
         <figure class="media-left" style="align-self: center">
             <a class="image is-32x32" href="/user/{{ user_info.username }}">
                 <img class="is-rounded" src="{{ url_for('static', filename=user_info.profile_pic_real) }}">
             </a>
         </figure>
+
+
         <div class="media-content">
             <div class="field">
                 <p class="control">
                     <input id="input-post" class="input is-rounded" placeholder="무슨 생각을 하고 계신가요?"
                            onclick='$("#modal-post").addClass("is-active")'></p>
-                <!--                <select class="option" id="option">-->
-                <!--                    <option> 오늘의 날씨는?</option>-->
-                <!--                    <option class="Sun" id="Sun" onclick="Sun()"> 🌞맑음</option>-->
-                <!--                    <option class="Cloudy" id="Cloudy" onclick="Cloudy()"> 🌫흐림</option>-->
-                <!--                    <option class="Rain" id="Rain" onclick="Rain()"> 💧비</option>-->
-                <!--                    <option class="Snow" id="Snow" onclick="Snow()"> ⛄눈</option>-->
-                <!--                    <option class="Etc" id="Etc" onclick="Etc()"> &#45;&#45;기타&#45;&#45;</option>-->
-                <!--                </select>-->
             </div>
         </div>
+
+<div class="media-content2">
+        <select class="option" id="option">
+            <option> 오늘의 날씨는?</option>
+            <option class="Sun" id="Sun" onclick="Sun()"> 🌞맑음</option>
+            <option class="Cloudy" id="Cloudy" onclick="Cloudy()"> 🌫흐림</option>
+            <option class="Rain" id="Rain" onclick="Rain()"> 💧비</option>
+            <option class="Snow" id="Snow" onclick="Snow()"> ⛄눈</option>
+            <option class="Etc" id="Etc" onclick="Etc()"> --기타--</option>
+        </select>
+</div>
+
     </article>
+
     <div class="modal" id="modal-post">
         <div class="modal-background" onclick='$("#modal-post").removeClass("is-active")'></div>
         <div class="modal-content">
@@ -177,7 +182,6 @@
     </div>
     </div>
 </section>
-
 
 
 <div class="slide_wrapper">
