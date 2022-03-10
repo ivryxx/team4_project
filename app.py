@@ -72,7 +72,7 @@ image = soup.select_one('#main_pack > section.sc_new.cs_weather_new._cs_weather 
 humidity = soup.select_one('#main_pack > section.sc_new.cs_weather_new._cs_weather > div._tab_flicking > div.content_wrap > div.open > div:nth-child(1) > div > div.weather_info > div > div.temperature_info > dl > dd:nth-child(4)')
 wind = soup.select_one('#main_pack > section.sc_new.cs_weather_new._cs_weather > div._tab_flicking > div.content_wrap > div.open > div:nth-child(1) > div > div.weather_info > div > div.temperature_info > dl > dd:nth-child(6)')
 weather = soup.select_one('#main_pack > section.sc_new.cs_weather_new._cs_weather > div._tab_flicking > div.content_wrap > div.open > div:nth-child(1) > div > div.weather_info > div > div.temperature_info > p > span.weather.before_slash')
-print('습도:', humidity.text ,image, '오늘의 날씨는?', weather.text , '기온:', temperature.text , '바람:',wind.text , location.text)
+print(humidity.text ,image.text, weather.text , temperature.text ,wind.text, location.text)
 
 doc = {
     'weather': weather.text,
@@ -206,16 +206,31 @@ def movie_listing():
     movie_list = list(db.movieData.find({}, {'_id': False}))
     return jsonify({'movies': movie_list})
 
+@app.route("/Sunmovie", methods=["GET"])
+def Sun():
+    movie_list = list(db.movieData.find({}, {'_id': False}))
+    return jsonify({'sun': movie_list})
 
-@app.route('/update_like', methods=['POST'])
-def update_like():
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        # 좋아요 수 변경
-        return jsonify({"result": "success", 'msg': 'updated'})
-    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("home"))
+@app.route("/Cloudymovie", methods=["GET"])
+def Cloudy():
+    movie_list = list(db.movieData.find({}, {'_id': False}))
+    return jsonify({'cloudy': movie_list})
+
+@app.route("/Rainmovie", methods=["GET"])
+def Rain():
+    movie_list = list(db.movieData.find({}, {'_id': False}))
+    return jsonify({'rain': movie_list})
+
+@app.route("/Snowmovie", methods=["GET"])
+def Snow():
+    movie_list = list(db.movieData.find({}, {'_id': False}))
+    return jsonify({'snow': movie_list})
+
+@app.route("/Etcmovie", methods=["GET"])
+def Etx():
+    movie_list = list(db.movieData.find({}, {'_id': False}))
+    return jsonify({'etc': movie_list})
+
 
 
 if __name__ == '__main__':
