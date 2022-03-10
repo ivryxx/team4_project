@@ -38,6 +38,7 @@ moviedata = BeautifulSoup(movie_data.text, 'html.parser')
 movies = moviedata.select('#content > div.article > div:nth-child(1) > div.lst_wrap > ul > li')
 
 # 반복문 돌면서 아래 코드 실행
+db.movieData.drop();
 for movie in movies:
     title = movie.select_one('dl > dt > a').text
     if title is not None:
@@ -46,22 +47,23 @@ for movie in movies:
         movieImage = movie.select_one('div > a > img')['src']
         movieScore = movie.select_one('dl > dd.star > dl.info_star > dd > div > a > span.num').text
         movieJenre = movie.select_one('dl > dd:nth-child(3) > dl > dd:nth-child(2) > span.link_txt > a:nth-child(1)').text
-        # print(movieName, movieImage, movieScore, movieJenre)
-
+        movielink = movie.select_one('dl > dd.info_t1 > div > a')['href']
 
 
         doc = {
             'movieNm': movieName,
             'movieImg': movieImage,
             'movieScr': movieScore,
-            'movieJnr': movieJenre
+            'movieJnr': movieJenre,
+            'movielink': movielink
+
         }
         db.movieData.insert_one(doc)
 
 data = requests.get('https://weather.com/ko-KR/weather/today',headers=headers)
-
 soup = BeautifulSoup(data.text, 'html.parser')
 
+db.weather.drop();
 weather = soup.select_one('#WxuCurrentConditions-main-b3094163-ef75-4558-8d9a-e35e6b9b1034 > div > section > div > div.CurrentConditions--body--8sQIV > div.CurrentConditions--columns--3KgfN > div.CurrentConditions--primary--2SVPh > div.CurrentConditions--phraseValue--2Z18W')
 temperature = soup.select_one('#WxuCurrentConditions-main-b3094163-ef75-4558-8d9a-e35e6b9b1034 > div > section > div > div.CurrentConditions--body--8sQIV > div.CurrentConditions--columns--3KgfN > div.CurrentConditions--primary--2SVPh > span')
 image = soup.select_one('#WxuCurrentConditions-main-b3094163-ef75-4558-8d9a-e35e6b9b1034 > div > section > div > div.CurrentConditions--body--8sQIV > div.CurrentConditions--columns--3KgfN > div.CurrentConditions--secondary--2J2Cx > svg > use:nth-child(2)')
