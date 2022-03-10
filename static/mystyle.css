@@ -1,8 +1,6 @@
 body {
-    /*background-color: #2c3452;*/
     min-height: 100vh;
     padding-top: 3.25rem;
-    /*background-image: url("https://w0.peakpx.com/wallpaper/841/871/HD-wallpaper-red-curtain-calm-cinema-cool-nice-theatre.jpg");*/
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url('https://w0.peakpx.com/wallpaper/841/871/HD-wallpaper-red-curtain-calm-cinema-cool-nice-theatre.jpg');
 }
 

@@ -205,16 +205,31 @@ def movie_listing():
     movie_list = list(db.movieData.find({}, {'_id': False}))
     return jsonify({'movies': movie_list})
 
+@app.route("/Sunmovie", methods=["GET"])
+def Sun():
+    movie_list = list(db.movieData.find({}, {'_id': False}))
+    return jsonify({'sun': movie_list})
 
-@app.route('/update_like', methods=['POST'])
-def update_like():
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        # 좋아요 수 변경
-        return jsonify({"result": "success", 'msg': 'updated'})
-    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("home"))
+@app.route("/Cloudymovie", methods=["GET"])
+def Cloudy():
+    movie_list = list(db.movieData.find({}, {'_id': False}))
+    return jsonify({'cloudy': movie_list})
+
+@app.route("/Rainmovie", methods=["GET"])
+def Rain():
+    movie_list = list(db.movieData.find({}, {'_id': False}))
+    return jsonify({'rain': movie_list})
+
+@app.route("/Snowmovie", methods=["GET"])
+def Snow():
+    movie_list = list(db.movieData.find({}, {'_id': False}))
+    return jsonify({'snow': movie_list})
+
+@app.route("/Etcmovie", methods=["GET"])
+def Etx():
+    movie_list = list(db.movieData.find({}, {'_id': False}))
+    return jsonify({'etc': movie_list})
+
 
 
 if __name__ == '__main__':
