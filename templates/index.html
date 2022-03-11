@@ -93,19 +93,19 @@
         }
 
         function getweather() {
-            let selected_weather = $("#option option:selected").text();
+            let selected_weather = $("#option option:selected").val();
             console.log(selected_weather);
-            if (selected_weather === "오늘의 날씨는?") {
+            if (selected_weather === "0") {
                 listing();
-            }else if (selected_weather === "🌞맑음") {
+            }else if (selected_weather === "1") {
                 Sun();
-            } else if (selected_weather === "🌫흐림") {
+            } else if (selected_weather === "2") {
                 Cloudy();
-            } else if (selected_weather === "💧비") {
+            } else if (selected_weather === "3") {
                 Rain();
-            } else if (selected_weather === "⛄눈") {
+            } else if (selected_weather === "4") {
                 Snow();
-            } else if (selected_weather === "--기타--") {
+            } else if (selected_weather === "5") {
                 Etc();
             }
 
