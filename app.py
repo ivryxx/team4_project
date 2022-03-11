@@ -37,18 +37,22 @@ moviedata = BeautifulSoup(movie_data.text, 'html.parser')
 
 # 공통 코드 추출
 movies = moviedata.select('#content > div.article > div:nth-child(1) > div.lst_wrap > ul > li')
+# content > div.article > div:nth-child(1) > div.lst_wrap > ul > li:nth-child(1) > dl > dd.info_t1 > div > a
 
 # 반복문 돌면서 아래 코드 실행
 db.movieData.drop()
 for movie in movies:
-    title = movie.select_one('dl > dt > a').text
-    if title is not None:
-        movieName = title
+    link = movie.select_one('dl > dd.info_t1 > div > a')['href']
+    print(link)
+
+    if link is not None:
+        movieName = movie.select_one('dl > dt > a').text
         movieImage = movie.select_one('div > a > img')['src']
         movieScore = movie.select_one('dl > dd.star > dl.info_star > dd > div > a > span.num').text
         movieJenre = movie.select_one(
             'dl > dd:nth-child(3) > dl > dd:nth-child(2) > span.link_txt > a:nth-child(1)').text
-        movielink = movie.select_one('dl > dd.info_t1 > div > a')['href']
+        movielink = link
+        print(movielink)
 
         doc = {
             'movieNm': movieName,
