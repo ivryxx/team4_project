@@ -19,9 +19,10 @@ SECRET_KEY = 'SPARTA'
 from pymongo import MongoClient
 import certifi
 
-ca= certifi.where()
+ca = certifi.where()
 
-client = MongoClient('mongodb+srv://test:sparta@cluster0.1jgyj.mongodb.net/Cluster0?retryWrites=true&w=majority',tlsCAFile=ca)
+client = MongoClient('mongodb+srv://test:sparta@cluster0.1jgyj.mongodb.net/Cluster0?retryWrites=true&w=majority',
+                     tlsCAFile=ca)
 db = client.sparta
 
 # 타겟 URL을 읽어서 HTML를 받아오고,
@@ -38,18 +39,16 @@ moviedata = BeautifulSoup(movie_data.text, 'html.parser')
 movies = moviedata.select('#content > div.article > div:nth-child(1) > div.lst_wrap > ul > li')
 
 # 반복문 돌면서 아래 코드 실행
-db.movieData.drop();
+db.movieData.drop()
 for movie in movies:
     title = movie.select_one('dl > dt > a').text
     if title is not None:
-
         movieName = title
         movieImage = movie.select_one('div > a > img')['src']
         movieScore = movie.select_one('dl > dd.star > dl.info_star > dd > div > a > span.num').text
-        movieJenre = movie.select_one('dl > dd:nth-child(3) > dl > dd:nth-child(2) > span.link_txt > a:nth-child(1)').text
-        # print(movieName, movieImage, movieScore, movieJenre)
-
-
+        movieJenre = movie.select_one(
+            'dl > dd:nth-child(3) > dl > dd:nth-child(2) > span.link_txt > a:nth-child(1)').text
+        movielink = movie.select_one('dl > dd.info_t1 > div > a')['href']
 
         doc = {
             'movieNm': movieName,
@@ -61,18 +60,25 @@ for movie in movies:
         }
         db.movieData.insert_one(doc)
 
-data = requests.get('https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=%EB%82%A0%EC%94%A8',headers=headers)
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
+data = requests.get('https://weather.com/ko-KR/weather/today', headers=headers)
 
 soup = BeautifulSoup(data.text, 'html.parser')
 
-db.weather.drop();
-location = soup.select_one('#main_pack > section.sc_new.cs_weather_new._cs_weather > div._tab_flicking > div.top_wrap > div.title_area._area_panel > h2.title')
-temperature = soup.select_one('#main_pack > section.sc_new.cs_weather_new._cs_weather > div._tab_flicking > div.content_wrap > div.open > div:nth-child(1) > div > div.weather_info > div > div.weather_graphic > div.temperature_text')
-image = soup.select_one('#main_pack > section.sc_new.cs_weather_new._cs_weather > div._tab_flicking > div.content_wrap > div.open > div:nth-child(1) > div > div.weather_info > div > div.weather_graphic > div.weather_main > i')
-humidity = soup.select_one('#main_pack > section.sc_new.cs_weather_new._cs_weather > div._tab_flicking > div.content_wrap > div.open > div:nth-child(1) > div > div.weather_info > div > div.temperature_info > dl > dd:nth-child(4)')
-wind = soup.select_one('#main_pack > section.sc_new.cs_weather_new._cs_weather > div._tab_flicking > div.content_wrap > div.open > div:nth-child(1) > div > div.weather_info > div > div.temperature_info > dl > dd:nth-child(6)')
-weather = soup.select_one('#main_pack > section.sc_new.cs_weather_new._cs_weather > div._tab_flicking > div.content_wrap > div.open > div:nth-child(1) > div > div.weather_info > div > div.temperature_info > p > span.weather.before_slash')
-print(humidity.text ,image.text, weather.text , temperature.text ,wind.text, location.text)
+weather = soup.select_one(
+    '#WxuCurrentConditions-main-b3094163-ef75-4558-8d9a-e35e6b9b1034 > div > section > div > div.CurrentConditions--body--8sQIV > div.CurrentConditions--columns--3KgfN > div.CurrentConditions--primary--2SVPh > div.CurrentConditions--phraseValue--2Z18W')
+temperature = soup.select_one(
+    '#WxuCurrentConditions-main-b3094163-ef75-4558-8d9a-e35e6b9b1034 > div > section > div > div.CurrentConditions--body--8sQIV > div.CurrentConditions--columns--3KgfN > div.CurrentConditions--primary--2SVPh > span')
+image = soup.select_one(
+    '#WxuCurrentConditions-main-b3094163-ef75-4558-8d9a-e35e6b9b1034 > div > section > div > div.CurrentConditions--body--8sQIV > div.CurrentConditions--columns--3KgfN > div.CurrentConditions--secondary--2J2Cx > svg > use:nth-child(2)')
+humidity = soup.select_one(
+    '#todayDetails > section > div.TodayDetailsCard--detailsContainer--16Hg0 > div:nth-child(3) > div.WeatherDetailsListItem--wxData--2s6HT > span')
+wind = soup.select_one(
+    '#todayDetails > section > div.TodayDetailsCard--detailsContainer--16Hg0 > div:nth-child(2) > div.WeatherDetailsListItem--wxData--2s6HT > span')
+location = soup.select_one(
+    '#WxuCurrentConditions-main-b3094163-ef75-4558-8d9a-e35e6b9b1034 > div > section > div > div.CurrentConditions--header--27uOE > h1')
+print('습도:', humidity.text, image, '오늘의 날씨는?', weather.text, '기온:', temperature.text, '바람:', wind.text, location.text)
 
 doc = {
     'weather': weather.text,
@@ -83,14 +89,11 @@ doc = {
 }
 db.weather.insert_one(doc)
 
-
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'SPARTA'
-
-
 
 
 @app.route('/')
@@ -132,7 +135,7 @@ def sign_in():
     username_receive = request.form['username_give']  # username_give로 받은 데이터를 username_receive에 저장
     password_receive = request.form['password_give']
 
-    pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()  # password_receive에 있는 비밀번호를 암호화
+    pw_hash = hashlib.sha256(password_receive).hexdigest()  # password_receive에 있는 비밀번호를 암호화
     result = db.users.find_one({'username': username_receive, 'password': pw_hash})  # db에서 아이디와 암호화된 비밀번호가 있는지 찾기
 
     if result is not None:  # 결과가 있는 경우
@@ -154,6 +157,7 @@ def sign_up():
     username_receive = request.form['username_give']
     password_receive = request.form['password_give']
     password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+
     doc = {
         "userRealName": userRealName_receive,  # 회원이름
         "username": username_receive,  # 아이디
@@ -172,7 +176,6 @@ def check_dup():
     username_receive = request.form['username_give']
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
-
 
 
 @app.route('/posting', methods=['POST'])
@@ -196,41 +199,47 @@ def get_posts():
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
+
 @app.route("/weather", methods=['GET'])
 def weather():
     weather_list = list(db.weather.find({}, {'_id': False}))
     return jsonify({'weather': weather_list})
+
 
 @app.route("/movieData", methods=["GET"])
 def movie_listing():
     movie_list = list(db.movieData.find({}, {'_id': False}))
     return jsonify({'movies': movie_list})
 
+
 @app.route("/Sunmovie", methods=["GET"])
 def Sun():
     movie_list = list(db.movieData.find({}, {'_id': False}))
     return jsonify({'sun': movie_list})
+
 
 @app.route("/Cloudymovie", methods=["GET"])
 def Cloudy():
     movie_list = list(db.movieData.find({}, {'_id': False}))
     return jsonify({'cloudy': movie_list})
 
+
 @app.route("/Rainmovie", methods=["GET"])
 def Rain():
     movie_list = list(db.movieData.find({}, {'_id': False}))
     return jsonify({'rain': movie_list})
+
 
 @app.route("/Snowmovie", methods=["GET"])
 def Snow():
     movie_list = list(db.movieData.find({}, {'_id': False}))
     return jsonify({'snow': movie_list})
 
+
 @app.route("/Etcmovie", methods=["GET"])
 def Etx():
     movie_list = list(db.movieData.find({}, {'_id': False}))
     return jsonify({'etc': movie_list})
-
 
 
 if __name__ == '__main__':
