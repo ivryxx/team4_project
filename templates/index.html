@@ -137,10 +137,7 @@
                     console.log(rows)
                     for (let i = 0; i < rows.length; i++) {
                         let default_url = "https://movie.naver.com/movie/bi/mi/running.naver?code="
-                        let movieName = rows[i]['movieNm']
                         let movieImage = rows[i]['movieImg']
-                        let movieScore = rows[i]['movieScr']
-                        let movieJenre = rows[i]['movieJnr']
                         let movieUrl = rows[i]['movielink'].split("=")[1]
                         let totalMovieUrl = default_url + movieUrl
 
@@ -169,10 +166,7 @@
                     console.log(rows)
                     for (let i = 0; i < rows.length; i++) {
                         let default_url = "https://movie.naver.com/movie/bi/mi/running.naver?code="
-                        let movieName = rows[i]['movieNm']
                         let movieImage = rows[i]['movieImg']
-                        let movieScore = rows[i]['movieScr']
-                        let movieJenre = rows[i]['movieJnr']
                         let movieUrl = rows[i]['movielink'].split("=")[1]
                         let totalMovieUrl = default_url + movieUrl
 
@@ -201,10 +195,7 @@
                     console.log(rows)
                     for (let i = 0; i < rows.length; i++) {
                         let default_url = "https://movie.naver.com/movie/bi/mi/running.naver?code="
-                        let movieName = rows[i]['movieNm']
                         let movieImage = rows[i]['movieImg']
-                        let movieScore = rows[i]['movieScr']
-                        let movieJenre = rows[i]['movieJnr']
                         let movieUrl = rows[i]['movielink'].split("=")[1]
                         let totalMovieUrl = default_url + movieUrl
 
@@ -233,15 +224,12 @@
                     console.log(rows)
                     for (let i = 0; i < rows.length; i++) {
                         let default_url = "https://movie.naver.com/movie/bi/mi/running.naver?code="
-                        let movieName = rows[i]['movieNm']
                         let movieImage = rows[i]['movieImg']
-                        let movieScore = rows[i]['movieScr']
-                        let movieJenre = rows[i]['movieJnr']
                         let movieUrl = rows[i]['movielink'].split("=")[1]
                         let totalMovieUrl = default_url + movieUrl
 
 
-                        let temp_html = `<li><a href="${totalMovieUrl}" target="_blank"><button type="button" class="btn btn-outline-danger"><img src="${movieImage}" style="width:170px; height:250px;"
+                        let temp_html = `<li><a href="${totalMovieUrl}" target="_blank"><button type="button" class="btn btn-outline-danger"><img src="${movieImage}"
                                              class="images" ></button></a></li>`
                         console.log(movieUrl)
 
@@ -265,10 +253,7 @@
                     console.log(rows)
                     for (let i = 0; i < rows.length; i++) {
                         let default_url = "https://movie.naver.com/movie/bi/mi/running.naver?code="
-                        let movieName = rows[i]['movieNm']
                         let movieImage = rows[i]['movieImg']
-                        let movieScore = rows[i]['movieScr']
-                        let movieJenre = rows[i]['movieJnr']
                         let movieUrl = rows[i]['movielink'].split("=")[1]
                         let totalMovieUrl = default_url + movieUrl
 
@@ -324,7 +309,7 @@
         </div>
 
         <div class="media-content2">
-            <select class="option" id="option" name="location" onclick="getweather()">
+            <select class="option" id="option" name="location" onclick="getweather()" style="border-radius: 5px; width: 140px; height: 30px;">
                     <option> 오늘의 날씨는?</option>
                     <option class="Sun" id="Sun" value="1" > 🌞맑음</option>
                     <option class="Cloudy" id="Cloudy" value="2" > 🌫흐림</option>
