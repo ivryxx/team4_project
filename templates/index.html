@@ -31,7 +31,7 @@
         });
 
         function listing() {
-
+            $('#movie').empty()
             $.ajax({
                 type: 'GET',
                 url: '/movieData',
@@ -59,8 +59,6 @@
 
 
         function show_weather() {
-
-
             $.ajax({
                 type: "GET",
                 url: "/weather",
@@ -93,41 +91,28 @@
                 },
             })
         }
-        function getweather(){
-            let selected_weather = $("#option option:selected").text();
-            console.log(selected_weather);
-            if(selected_weather === "🌞맑음"){
-            }
-        }
-        function getweather(){
-            let selected_weather = $("#option option:selected").text();
-            console.log(selected_weather);
-            if(selected_weather === "🌫흐림"){
-            }
-        }
-        function getweather(){
-            let selected_weather = $("#option option:selected").text();
-            console.log(selected_weather);
-            if(selected_weather === "💧비"){
-            }
-        }
-        function getweather(){
-            let selected_weather = $("#option option:selected").text();
-            console.log(selected_weather);
-            if(selected_weather === "⛄눈"){
-            }
-        }
 
-        function getweather(){
+        function getweather() {
             let selected_weather = $("#option option:selected").text();
             console.log(selected_weather);
-            if(selected_weather === " --기타--"){
+            if (selected_weather === "오늘의 날씨는?") {
+                listing();
+            }else if (selected_weather === "🌞맑음") {
+                Sun();
+            } else if (selected_weather === "🌫흐림") {
+                Cloudy();
+            } else if (selected_weather === "💧비") {
+                Rain();
+            } else if (selected_weather === "⛄눈") {
+                Snow();
+            } else if (selected_weather === "--기타--") {
+                Etc();
             }
+
         }
 
         function Sun() {
             $('#movie').empty()
-            window.location.reload()
             $.ajax({
                 type: 'GET',
                 url: '/Sunmovie',
@@ -137,26 +122,24 @@
                     console.log(rows)
                     for (let i = 0; i < rows.length; i++) {
                         let default_url = "https://movie.naver.com/movie/bi/mi/running.naver?code="
+                        let movieName = rows[i]['movieNm']
                         let movieImage = rows[i]['movieImg']
+                        let movieScore = rows[i]['movieScr']
+                        let movieJenre = rows[i]['movieJnr']
                         let movieUrl = rows[i]['movielink'].split("=")[1]
                         let totalMovieUrl = default_url + movieUrl
 
 
                         let temp_html = `<li><a href="${totalMovieUrl}" target="_blank"><button type="button" class="btn btn-outline-danger"><img src="${movieImage}" style="width:170px; height:250px;"
                                              class="images" ></button></a></li>`
-                        console.log(movieUrl)
-
-
                         $('#movie').append(temp_html)
                     }
                 }
             });
-
         }
 
         function Cloudy() {
             $('#movie').empty()
-            window.location.reload()
             $.ajax({
                 type: 'GET',
                 url: '/Cloudymovie',
@@ -185,7 +168,6 @@
 
         function Rain() {
             $('#movie').empty()
-            window.location.reload()
             $.ajax({
                 type: 'GET',
                 url: '/Rainmovie',
@@ -214,7 +196,6 @@
 
         function Snow() {
             $('#movie').empty()
-            window.location.reload()
             $.ajax({
                 type: 'GET',
                 url: '/Snowmovie',
@@ -243,7 +224,6 @@
 
         function Etc() {
             $('#movie').empty()
-            window.location.reload()
             $.ajax({
                 type: 'GET',
                 url: '/Etcmovie',
@@ -309,14 +289,15 @@
         </div>
 
         <div class="media-content2">
-            <select class="option" id="option" name="location" onclick="getweather()" style="border-radius: 5px; width: 140px; height: 30px;">
-                    <option> 오늘의 날씨는?</option>
-                    <option class="Sun" id="Sun" value="1" > 🌞맑음</option>
-                    <option class="Cloudy" id="Cloudy" value="2" > 🌫흐림</option>
-                    <option class="Rain" id="Rain" value="3" > 💧비</option>
-                    <option class="Snow" id="Snow" value="4" > ⛄눈</option>
-                    <option class="Etc" id="Etc" value="5"> --기타--</option>
-                </select>
+            <select class="option" id="option" name="location" onchange="getweather()"
+                    style="border-radius: 5px; width: 140px; height: 30px;">
+                <option class="All" id="All" value="0">오늘의 날씨는?</option>
+                <option class="Sun" id="Sun" value="1">🌞맑음</option>
+                <option class="Cloudy" id="Cloudy" value="2">🌫흐림</option>
+                <option class="Rain" id="Rain" value="3">💧비</option>
+                <option class="Snow" id="Snow" value="4">⛄눈</option>
+                <option class="Etc" id="Etc" value="5">--기타--</option>
+            </select>
         </div>
 
     </article>

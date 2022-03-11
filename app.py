@@ -14,6 +14,8 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'SPARTA'
 
+
+
 # 몽고디비연결
 # 크롤링 세팅
 from pymongo import MongoClient
@@ -37,6 +39,11 @@ moviedata = BeautifulSoup(movie_data.text, 'html.parser')
 
 # 공통 코드 추출
 movies = moviedata.select('#content > div.article > div:nth-child(1) > div.lst_wrap > ul > li')
+
+
+
+
+
 
 # 반복문 돌면서 아래 코드 실행
 db.movieData.drop()
@@ -214,31 +221,31 @@ def movie_listing():
 
 @app.route("/Sunmovie", methods=["GET"])
 def Sun():
-    movie_list = list(db.movieData.find({}, {'_id': False}))
+    movie_list = list(db.Sunmovie.find({'movieJnr' : '액션'}, {'_id': False}))
     return jsonify({'sun': movie_list})
 
 
 @app.route("/Cloudymovie", methods=["GET"])
 def Cloudy():
-    movie_list = list(db.movieData.find({}, {'_id': False}))
+    movie_list = list(db.Cloudymovie.find({'movieJnr' : '스릴러'}, {'_id': False}))
     return jsonify({'cloudy': movie_list})
 
 
 @app.route("/Rainmovie", methods=["GET"])
 def Rain():
-    movie_list = list(db.movieData.find({}, {'_id': False}))
+    movie_list = list(db.Rainmovie.find({'movieJnr' : '드라마'}, {'_id': False}))
     return jsonify({'rain': movie_list})
 
 
 @app.route("/Snowmovie", methods=["GET"])
 def Snow():
-    movie_list = list(db.movieData.find({}, {'_id': False}))
+    movie_list = list(db.Snowmovie.find({'movieJnr' : '멜로/로맨스'}, {'_id': False}))
     return jsonify({'snow': movie_list})
 
 
 @app.route("/Etcmovie", methods=["GET"])
 def Etx():
-    movie_list = list(db.movieData.find({}, {'_id': False}))
+    movie_list = list(db.Etcmovie.find({}, {'_id': False}))
     return jsonify({'etc': movie_list})
 
 
