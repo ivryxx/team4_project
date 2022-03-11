@@ -7,6 +7,8 @@ from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 import requests
 from bs4 import BeautifulSoup
+from pymongo import MongoClient
+import certifi
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -16,8 +18,6 @@ SECRET_KEY = 'SPARTA'
 
 # 몽고디비연결
 # 크롤링 세팅
-from pymongo import MongoClient
-import certifi
 
 ca = certifi.where()
 
@@ -43,7 +43,6 @@ movies = moviedata.select('#content > div.article > div:nth-child(1) > div.lst_w
 db.movieData.drop()
 for movie in movies:
     link = movie.select_one('dl > dd.info_t1 > div > a')['href']
-    print(link)
 
     if link is not None:
         movieName = movie.select_one('dl > dt > a').text
@@ -52,7 +51,6 @@ for movie in movies:
         movieJenre = movie.select_one(
             'dl > dd:nth-child(3) > dl > dd:nth-child(2) > span.link_txt > a:nth-child(1)').text
         movielink = link
-        print(movielink)
 
         doc = {
             'movieNm': movieName,
@@ -93,13 +91,6 @@ doc = {
 }
 db.weather.insert_one(doc)
 
-app = Flask(__name__)
-app.config["TEMPLATES_AUTO_RELOAD"] = True
-app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
-
-SECRET_KEY = 'SPARTA'
-
-
 @app.route('/')
 def home():
     token_receive = request.cookies.get('mytoken')
@@ -139,7 +130,7 @@ def sign_in():
     username_receive = request.form['username_give']  # username_give로 받은 데이터를 username_receive에 저장
     password_receive = request.form['password_give']
 
-    pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()  # password_receive에 있는 비밀번호를 암호화
+    pw_hash = hashlib.sha256(password_receive).hexdigest()  # password_receive에 있는 비밀번호를 암호화
     result = db.users.find_one({'username': username_receive, 'password': pw_hash})  # db에서 아이디와 암호화된 비밀번호가 있는지 찾기
 
     if result is not None:  # 결과가 있는 경우
