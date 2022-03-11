@@ -135,7 +135,7 @@ def sign_in():
     username_receive = request.form['username_give']  # username_give로 받은 데이터를 username_receive에 저장
     password_receive = request.form['password_give']
 
-    pw_hash = hashlib.sha256(password_receive).hexdigest()  # password_receive에 있는 비밀번호를 암호화
+    pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()  # password_receive에 있는 비밀번호를 암호화
     result = db.users.find_one({'username': username_receive, 'password': pw_hash})  # db에서 아이디와 암호화된 비밀번호가 있는지 찾기
 
     if result is not None:  # 결과가 있는 경우
